@@ -1,0 +1,17 @@
+type: install
+name: Jelasticozor Consumer UI
+
+settings:
+  fields:
+    - name: image
+      caption: Docker image
+      type: string
+      required: true
+
+nodes:
+  - count: 1
+    cloudlets: 4
+    nodeGroup: bl
+    nodeType: docker
+    image: ${settings.image}
+skipNodeEmails: true
