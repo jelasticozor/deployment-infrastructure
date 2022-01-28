@@ -1,0 +1,94 @@
+type: install
+name: Jelasticozor Gitlab Runners
+baseUrl: http://gitlab.hidora.com/softozor/gitlab-runner/-/raw/master
+
+settings:
+  fields:
+  - name: gitlabUrl
+    caption: Gitlab Url
+    type: string
+    default: http://gitlab.hidora.com
+  - name: gitlabToken
+    caption: Gitlab Registration Token
+    type: string
+    required: true
+  - name: runnerDockerImage
+    caption: Runner docker image
+    type: string
+    default: gitlab/dind:latest
+  - name: runnerVersion
+    type: string
+    caption: Runner Version (commit sha1)
+    default: v14.7.0
+  - name: shmSize
+    type: string
+    caption: shm size
+    default: 1000000000
+
+globals:
+  RUNNER_NAME_PREFIX: jelasticozor-services
+
+env:
+  topology:
+    nodes:
+      - nodeGroup: runner
+        nodeType: docker
+        displayName: ${globals.RUNNER_NAME_PREFIX}-01
+        count: 1
+        fixedCloudlets: 1
+        cloudlets: 32
+        image: softozor/gitlab-runner:${settings.runnerVersion}
+
+onInstall:
+  - installCleanupCronJob
+  - register
+  - install:
+      jps: add-runner.yml
+      settings:
+        gitlabUrl: ${settings.gitlabUrl}
+        gitlabToken: ${settings.gitlabToken}
+        runnerName: ${globals.RUNNER_NAME_PREFIX}-02
+        tagsList: ""
+        runUntagged: true
+        dockerPrivileged: false
+        limit: 1
+        runnerVersion: ${settings.runnerVersion}
+        shmSize: ${settings.shmSize}
+  - install:
+      jps: add-runner.yml
+      settings:
+        gitlabUrl: ${settings.gitlabUrl}
+        gitlabToken: ${settings.gitlabToken}
+        runnerName: ${globals.RUNNER_NAME_PREFIX}-03
+        tagsList: ""
+        runUntagged: true
+        dockerPrivileged: false
+        limit: 1
+        runnerVersion: ${settings.runnerVersion}
+        shmSize: ${settings.shmSize}
+
+actions:
+  installCleanupCronJob:
+    - cmd [runner]: |-
+        CRON_FILE=current_cron
+        crontab -l > $CRON_FILE
+        echo "@monthly docker system prune -af --volumes" >> $CRON_FILE
+        crontab $CRON_FILE
+        rm $CRON_FILE
+  register:
+    - cmd [runner]: |-
+        gitlab-runner register \
+          --non-interactive \
+          --url "${settings.gitlabUrl}" \
+          --registration-token "${settings.gitlabToken}" \
+          --executor "docker" \
+          --docker-image ${settings.runnerDockerImage} \
+          --name "${globals.RUNNER_NAME_PREFIX}-01" \
+          --tag-list "" \
+          --run-untagged="true" \
+          --docker-privileged="false" \
+          --docker-shm-size=${settings.shmSize} \
+          --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
+          --docker-volumes /builds:/builds:rw \
+          --docker-volumes /cache \
+          --limit 1
