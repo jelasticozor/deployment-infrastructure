@@ -7,11 +7,17 @@ settings:
       caption: Docker image
       type: string
       required: true
-
+    - name: endpoint
+      caption: GraphQL endpoint
+      type: string
+      required: true
+      
 nodes:
   - count: 1
     cloudlets: 4
     nodeGroup: bl
     nodeType: docker
     image: ${settings.image}
+    env:
+      API_ENDPOINT: ${settings.endpoint}
 skipNodeEmails: true
