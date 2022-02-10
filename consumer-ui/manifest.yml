@@ -20,4 +20,5 @@ nodes:
     image: ${settings.image}
     env:
       API_ENDPOINT: ${settings.endpoint}
+      COMMIT_SHORT_SHA: ${settings.shortsha}
 skipNodeEmails: true
