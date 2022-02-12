@@ -14,6 +14,4 @@ nodes:
     nodeGroup: bl
     nodeType: docker
     image: ${settings.image}
-    env:
-      COMMIT_SHORT_SHA: ${settings.shortsha}
 skipNodeEmails: true
