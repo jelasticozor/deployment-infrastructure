@@ -7,10 +7,6 @@ settings:
       caption: Docker image
       type: string
       required: true
-    - name: endpoint
-      caption: GraphQL endpoint
-      type: string
-      required: true
       
 nodes:
   - count: 1
@@ -19,6 +15,5 @@ nodes:
     nodeType: docker
     image: ${settings.image}
     env:
-      API_ENDPOINT: ${settings.endpoint}
       COMMIT_SHORT_SHA: ${settings.shortsha}
 skipNodeEmails: true
