@@ -1,14 +1,11 @@
 type: install
 name: Jelasticozor Consumer UI
+ssl: true
 
 settings:
   fields:
     - name: image
       caption: Docker image
-      type: string
-      required: true
-    - name: endpoint
-      caption: GraphQL endpoint
       type: string
       required: true
       
@@ -18,6 +15,4 @@ nodes:
     nodeGroup: bl
     nodeType: docker
     image: ${settings.image}
-    env:
-      API_ENDPOINT: ${settings.endpoint}
 skipNodeEmails: true
