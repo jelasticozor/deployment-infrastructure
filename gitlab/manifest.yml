@@ -1,13 +1,13 @@
 type: install
 name: Jelasticozor Gitlab Runners
-baseUrl: http://gitlab.hidora.com/softozor/gitlab-runner/-/raw/master
+baseUrl: https://gitlab.hidora.com/softozor/gitlab-runner/-/raw/master
 
 settings:
   fields:
   - name: gitlabUrl
     caption: Gitlab Url
     type: string
-    default: http://gitlab.hidora.com
+    default: https://gitlab.hidora.com
   - name: gitlabToken
     caption: Gitlab Registration Token
     type: string
