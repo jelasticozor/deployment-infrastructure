@@ -1,3 +1,4 @@
+# https://github.com/elastic/helm-charts/tree/main/elasticsearch
 minimumMasterNodes: 1
 replicas: 1
 antiAffinity: "soft"

@@ -1,5 +1,8 @@
+# https://artifacthub.io/packages/helm/bitnami/mongodb
 global:
   storageClass: jelastic-dynamic-volume
+image:
+  tag: 5.0.8-debian-10-r10
 architecture: replicaset
 useStatefulSet: true
 replicaCount: 1

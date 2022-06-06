@@ -1,0 +1,3 @@
+# https://github.com/codecentric/helm-charts/tree/master/charts/mailhog
+image:
+  tag: v1.0.1

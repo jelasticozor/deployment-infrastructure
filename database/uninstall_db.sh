@@ -1,5 +1,7 @@
 #! /bin/sh
 
-helm uninstall postgresql
+NAMESPACE=database
 
-kubectl delete namespace database
+helm uninstall --namespace ${NAMESPACE} postgresql
+
+kubectl delete namespace ${NAMESPACE}

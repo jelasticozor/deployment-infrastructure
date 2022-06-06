@@ -25,7 +25,9 @@ sed -i s/FUSIONAUTH_DB_USERNAME/${FUSIONAUTH_DB_USERNAME}/g postgresql-values.ya
 sed -i s/FUSIONAUTH_DB_PASSWORD/${FUSIONAUTH_DB_PASSWORD}/g postgresql-values.yaml
 sed -i s/FUSIONAUTH_DB_NAME/${FUSIONAUTH_DB_NAME}/g postgresql-values.yaml
 
-kubectl create namespace database
+NAMESPACE=database
 
-helm install --namespace database postgresql bitnami/postgresql \
+kubectl create namespace ${NAMESPACE}
+
+helm install --namespace ${NAMESPACE} postgresql bitnami/postgresql \
   -f postgresql-values.yaml
