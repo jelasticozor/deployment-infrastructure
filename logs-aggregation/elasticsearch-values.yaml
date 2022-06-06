@@ -1,0 +1,18 @@
+minimumMasterNodes: 1
+replicas: 1
+antiAffinity: "soft"
+httpPort: 9200
+esJavaOpts: "-Xmx128m -Xms128m"
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512M"
+  limits:
+    cpu: "1000m"
+    memory: "512M"
+volumeClaimTemplate:
+  resources:
+    requests:
+      storage: 8Gi
+      storageClassName: jelastic-dynamic-volume
+imageTag: 7.17.4

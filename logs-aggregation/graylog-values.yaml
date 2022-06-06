@@ -1,0 +1,19 @@
+tags:
+  install-mongodb: false
+  install-elasticsearch: false
+graylog:
+  mongodb:
+    uri: mongodb://mongodb-0.mongodb-headless.graylog.svc.cluster.local:27017/graylog?replicaSet=rs0
+  elasticsearch:
+    hosts: http://elasticsearch-master.graylog.svc.cluster.local:9200
+    version: 7
+  persistence:
+    enabled: true
+    storageClass: jelastic-dynamic-volume
+  service:
+    type: ClusterIP
+    port: 9000
+    ports:
+      - name: gelf
+        port: 12201
+        protocol: TCP

@@ -1,0 +1,16 @@
+global:
+  storageClass: jelastic-dynamic-volume
+architecture: replicaset
+useStatefulSet: true
+replicaCount: 1
+auth:
+  enabled: false
+service:
+  type: ClusterIP
+  portName: mongodb
+  ports:
+    mongodb: 27017
+persistence:
+  enabled: true
+arbiter:
+  enabled: false

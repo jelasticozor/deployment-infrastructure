@@ -14,6 +14,7 @@ FUSIONAUTH_DB_USERNAME=$6
 FUSIONAUTH_DB_PASSWORD=$7
 
 helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
 
 wget "${BASE_URL}/database/values.yaml" -O postgresql-values.yaml
 
@@ -24,5 +25,7 @@ sed -i s/FUSIONAUTH_DB_USERNAME/${FUSIONAUTH_DB_USERNAME}/g postgresql-values.ya
 sed -i s/FUSIONAUTH_DB_PASSWORD/${FUSIONAUTH_DB_PASSWORD}/g postgresql-values.yaml
 sed -i s/FUSIONAUTH_DB_NAME/${FUSIONAUTH_DB_NAME}/g postgresql-values.yaml
 
-helm install postgresql bitnami/postgresql \
+kubectl create namespace database
+
+helm install --namespace database postgresql bitnami/postgresql \
   -f postgresql-values.yaml
