@@ -1,6 +1,6 @@
 # https://github.com/bitnami/charts/tree/master/bitnami/postgresql
 global:
-  storageClass: 
+  storageClass: jelastic-dynamic-storage
 image:
   tag: 14.3.0-debian-10-r17
 primary:
