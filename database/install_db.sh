@@ -16,18 +16,18 @@ FUSIONAUTH_DB_PASSWORD=$7
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
-wget "${BASE_URL}/database/postgresql-values.yaml" -O postgresql-values.yaml
+wget "${BASE_URL}/database/postgresql-values.yaml" -O /tmp/postgresql-values.yaml
 
-sed -i s/HASURA_DB_USERNAME/${HASURA_DB_USERNAME}/g postgresql-values.yaml
-sed -i s/HASURA_DB_PASSWORD/${HASURA_DB_PASSWORD}/g postgresql-values.yaml
-sed -i s/HASURA_DB_NAME/${HASURA_DB_NAME}/g postgresql-values.yaml
-sed -i s/FUSIONAUTH_DB_USERNAME/${FUSIONAUTH_DB_USERNAME}/g postgresql-values.yaml
-sed -i s/FUSIONAUTH_DB_PASSWORD/${FUSIONAUTH_DB_PASSWORD}/g postgresql-values.yaml
-sed -i s/FUSIONAUTH_DB_NAME/${FUSIONAUTH_DB_NAME}/g postgresql-values.yaml
+sed -i s/HASURA_DB_USERNAME/${HASURA_DB_USERNAME}/g /tmp/postgresql-values.yaml
+sed -i s/HASURA_DB_PASSWORD/${HASURA_DB_PASSWORD}/g /tmp/postgresql-values.yaml
+sed -i s/HASURA_DB_NAME/${HASURA_DB_NAME}/g /tmp/postgresql-values.yaml
+sed -i s/FUSIONAUTH_DB_USERNAME/${FUSIONAUTH_DB_USERNAME}/g /tmp/postgresql-values.yaml
+sed -i s/FUSIONAUTH_DB_PASSWORD/${FUSIONAUTH_DB_PASSWORD}/g /tmp/postgresql-values.yaml
+sed -i s/FUSIONAUTH_DB_NAME/${FUSIONAUTH_DB_NAME}/g /tmp/postgresql-values.yaml
 
 NAMESPACE=database
 
 kubectl create namespace ${NAMESPACE}
 
 helm install --namespace ${NAMESPACE} postgresql bitnami/postgresql \
-  -f postgresql-values.yaml
+  -f /tmp/postgresql-values.yaml

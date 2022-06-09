@@ -9,13 +9,13 @@ NAMESPACE=graylog
 
 kubectl create namespace ${NAMESPACE}
 
-wget "${BASE_URL}/logs-aggregation/mongodb-values.yaml" -O mongodb-values.yaml
+wget "${BASE_URL}/logs-aggregation/mongodb-values.yaml" -O /tmp/mongodb-values.yaml
 helm install --namespace ${NAMESPACE} mongodb bitnami/mongodb \
-  -f mongodb-values.yaml
-wget "${BASE_URL}/logs-aggregation/elasticsearch-values.yaml" -O elasticsearch-values.yaml
+  -f /tmp/mongodb-values.yaml
+wget "${BASE_URL}/logs-aggregation/elasticsearch-values.yaml" -O /tmp/elasticsearch-values.yaml
 helm install --namespace ${NAMESPACE} elasticsearch elastic/elasticsearch \
-  -f elasticsearch-values.yaml
+  -f /tmp/elasticsearch-values.yaml
 
-wget "${BASE_URL}/logs-aggregation/graylog-values.yaml" -O graylog-values.yaml
+wget "${BASE_URL}/logs-aggregation/graylog-values.yaml" -O /tmp/graylog-values.yaml
 helm install --namespace ${NAMESPACE} graylog kongz/graylog \
-  -f graylog-values.yaml
+  -f /tmp/graylog-values.yaml

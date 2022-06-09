@@ -7,6 +7,6 @@ NAMESPACE=mail
 
 kubectl create namespace ${NAMESPACE}
 
-wget "${BASE_URL}/mailhog/mailhog-values.yaml" -O mailhog-values.yaml
+wget "${BASE_URL}/mailhog/mailhog-values.yaml" -O /tmp/mailhog-values.yaml
 helm install --namespace ${NAMESPACE} mailhog codecentric/mailhog \
-  -f mailhog-values.yaml
+  -f /tmp/mailhog-values.yaml
