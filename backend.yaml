@@ -1,6 +1,6 @@
 type: install
 name: Jelasticozor Backend Cluster
-baseUrl: https://gitlab.hidora.com/softozor/infrastructure/-/raw/master
+baseUrl: https://gitlab.hidora.com/softozor/jelasticozor/infrastructure/-/raw/master
 
 settings:
   fields:
