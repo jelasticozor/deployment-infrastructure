@@ -1,5 +1,12 @@
 #! /bin/sh
 
+if [ "$#" -ne "1" ] ; then
+  echo "Usage: $0 <baseUrl>"
+  exit 1
+fi
+
+BASE_URL=$1
+
 helm repo add elastic https://helm.elastic.co
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add kongz https://charts.kong-z.com

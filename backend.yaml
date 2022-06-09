@@ -156,8 +156,8 @@ actions:
       # 4. install fusionauth
       # 6. install hasura graphql-engine
       cmd: |-
-        [ "${settings.topo}" -eq "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh
-        curl -fsSL ${baseUrl}/logs-aggregation/install_graylog.sh | /bin/sh        
+        [ "${settings.topo}" -eq "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh -s ${baseUrl}
+        curl -fsSL ${baseUrl}/logs-aggregation/install_graylog.sh | /bin/sh -s ${baseUrl}
         curl -fsSL ${baseUrl}/database/install_db.sh | /bin/sh -s ${baseUrl} ${globals.HASURA_DB_NAME} ${globals.HASURA_DB_USERNAME} ${globals.HASURA_DB_PASSWORD} ${globals.AUTH_DB_NAME} ${globals.AUTH_DB_USERNAME} ${globals.AUTH_DB_PASSWORD}
         curl -fsSL ${baseUrl}/faas/install_faas.sh | /bin/sh
       topo: ${settings.topo}
