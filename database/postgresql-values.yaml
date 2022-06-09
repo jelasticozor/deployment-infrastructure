@@ -3,6 +3,7 @@ global:
   storageClass: jelastic-dynamic-storage
 image:
   tag: 14.3.0-debian-10-r17
+architecture: standalone
 primary:
   initdb:
     scripts:
