@@ -16,4 +16,9 @@ That's probably because of the way the cluster user authenticates (with access t
 5. take over the remote kube config and merge it with your local kube config
 6. replace the `k8sm.env-8930174839.hidora.com` hostname with the k8sm node's ip address
 
-Then, Lens will be able to connect to the remote k8s cluster.
+Then, Lens will be able to connect to the remote k8s cluster. Alternatively, you can also
+
+1. create a Jelastic endpoint to the master node on port 6443
+2. connect to your k8s cluster master node and display the `/root/.kube/config` file
+3. take over the remote kube config and merge it with your local kube config
+4. replace the `k8sm.env-8930174839.hidora.com` hostname with the k8sm node's ip address
