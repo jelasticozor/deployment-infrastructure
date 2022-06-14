@@ -99,6 +99,9 @@ settings:
             required: true
     
 globals:
+  # mail
+  MAILHOG_NAMESPACE: mail
+  MAILHOG_RELEASE_NAME: mailhog
   # postgres
   HASURA_DB_NAME: hasura
   HASURA_DB_USERNAME: hasura_user
@@ -131,7 +134,7 @@ actions:
           hasuraEnableConsole: "${settings.topo}" == "0-dev" ? "true" : "false",
           externalDomains: ${settings.useDefaultExternalDomain} ? "${env.domain}" : "${settings.externalDomains}",
           mailServer: {
-            host: "${settings.topo}" == "0-dev" ? "mailhog.mail" : "${settings.mailServerHost}",
+            host: "${settings.topo}" == "0-dev" ? "${globals.MAILHOG_RELEASE_NAME}.${globals.MAILHOG_NAMESPACE}" : "${settings.mailServerHost}",
             port: "${settings.topo}" == "0-dev" ? 1025 : ${settings.mailServerPort},
             username: "${settings.topo}" == "0-dev" ? "" : ${settings.mailServerUsername},
             password: "${settings.topo}" == "0-dev" ? "" : ${settings.mailServerPassword},        
@@ -155,10 +158,9 @@ actions:
     settings:
       deploy: cmd
       # TODO:
-      # 4. install fusionauth
       # 6. install hasura graphql-engine
       cmd: |-
-        [ "${settings.topo}" -eq "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh -s ${baseUrl}
+        [ "${settings.topo}" -eq "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh -s ${baseUrl} ${globals.MAILHOG_NAMESPACE} ${globals.MAILHOG_RELEASE_NAME} 
         curl -fsSL ${baseUrl}/logs-aggregation/install_graylog.sh | /bin/sh -s ${baseUrl}
         curl -fsSL ${baseUrl}/database/install_db.sh | /bin/sh -s ${baseUrl} ${globals.HASURA_DB_NAME} ${globals.HASURA_DB_USERNAME} ${globals.HASURA_DB_PASSWORD} ${globals.AUTH_DB_NAME} ${globals.AUTH_DB_USERNAME} ${globals.AUTH_DB_PASSWORD}
         curl -fsSL ${baseUrl}/faas/install_faas.sh | /bin/sh

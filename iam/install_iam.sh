@@ -73,7 +73,7 @@ python $KICKSTART_PY --admin-email=${ADMIN_USER_EMAIL} \
     --hasura-claims-namespace ${HASURA_CLAIMS_NAMESPACE} \
     --input-kickstart ${KICKSTART_JSON} \
     --output-kickstart ${KICKSTART_JSON}
-  sed 's/^/      /' $KICKSTART_JSON > $INDENTED_KICKSTART_JSON
+sed 's/^/      /' $KICKSTART_JSON > $INDENTED_KICKSTART_JSON
 
 cat <<EOT >> ${FUSIONAUTH_VALUES}
 
@@ -86,7 +86,6 @@ kickstart:
     kickstart.json: |
 EOT
 
-# TODO: double-check the format of the fusionauth values yaml file
 cat $INDENTED_KICKSTART_JSON >> ${FUSIONAUTH_VALUES}
 
 NAMESPACE=iam
