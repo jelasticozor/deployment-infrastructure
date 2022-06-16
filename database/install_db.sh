@@ -18,7 +18,7 @@ FUSIONAUTH_DB_PASSWORD=$9
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
-POSTGRES_VALUES=${POSTGRES_VALUES}
+POSTGRES_VALUES=/tmp/postgresql-values.yaml
 wget "${BASE_URL}/database/postgresql-values.yaml" -O ${POSTGRES_VALUES}
 
 sed -i s/HASURA_DB_USERNAME/${HASURA_DB_USERNAME}/g ${POSTGRES_VALUES}
