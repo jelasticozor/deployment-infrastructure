@@ -1,0 +1,52 @@
+# https://github.com/platyplus/platyplus/tree/master/charts/hasura
+imageConfig:
+  repository: hasura/graphql-engine
+  pullPolicy: IfNotPresent
+   tag: v2.8.0
+devMode: true
+replicaCount: 1
+log:
+  level: info
+  types:
+    - startup
+    - http-log
+    - webhook-log
+    - websocket-log
+allowList:
+  enabled: false
+enabledApis:
+  - metadata
+  - graphql
+  - pgdump
+  - config
+cors:
+  disable: false
+  domain:
+    - '*'
+jwtSecret: '{"type": "JWT_KEY_ALGORITHM", "jwk_url": "http://IAM_HOSTNAME:IAM_PORT/.well-known/jwks.json", "audience": [], "claims_namespace": "HASURA_CLAIMS_NAMESPACE", "claims_format": "json", "issuer": "JWT_ISSUER"}'
+adminSecret: HASURA_ADMIN_SECRET
+console:
+  enabled: true
+  assetsDir: /srv/console-assets
+unauthorizedRole: anonymous
+# TODO: fix this
+ingress:
+  enabled: false
+  className: nginx
+  subdomain: hasura # in conjuction with .Values.global.ingress.domain
+  tls:
+    enabled: false
+  # hosts:
+  #   - name: my-service.domain1.com
+  annotations: {}
+postgres:
+  enabled: false
+pgClient:
+  external:
+    enabled: true
+    host: POSTGRESQL_HOSTNAME
+    port: POSTGRESQL_PORT
+    username: POSTGRESQL_USERNAME
+    password: POSTGRESQL_PASSWORD
+    database: POSTGRESQL_DATABASE_NAME
+    

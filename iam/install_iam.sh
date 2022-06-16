@@ -1,28 +1,32 @@
 #! /bin/sh
 
-if [ "$#" -ne "18" ] ; then
-  echo "Usage: $0 <baseUrl> <topo> <db-user> <db-user-password> <db-name> <admin-user-email> <admin-user-password> <almighty-api-key> <serverless-api-key> <auth-issuer> <mail-server-host> <mail-server-port> <mail-server-username> <mail-server-password> <mail-server-ssl> <from-email> <from-name> <hasura-claims-namespace>"
+if [ "$#" -ne "22" ] ; then
+  echo "Usage: $0 <baseUrl> <iamReleaseName> <iamNamespace> <postgresqlReleaseName> <postgresqlNamespace> <topo> <db-user> <db-user-password> <db-name> <admin-user-email> <admin-user-password> <almighty-api-key> <serverless-api-key> <auth-issuer> <mail-server-host> <mail-server-port> <mail-server-username> <mail-server-password> <mail-server-ssl> <from-email> <from-name> <hasura-claims-namespace>"
   exit 1
 fi
 
 BASE_URL=$1
-TOPO=$2
-DB_USER=$3
-DB_USER_PASSWORD=$4
-DB_NAME=$5
-ADMIN_USER_EMAIL=$6
-AUTH_ADMIN_PASSWORD=$7
-AUTH_ALMIGHTY_API_KEY=$8
-AUTH_SERVERLESS_API_KEY=$9
-AUTH_ISSUER=${10}
-MAIL_SERVER_HOST=${11}
-MAIL_SERVER_PORT=${12}
-MAIL_SERVER_USERNAME=${13}
-MAIL_SERVER_PASSWORD=${14}
-MAIL_SERVER_SSL=${15}
-FROM_EMAIL=${16}
-FROM_NAME=${17}
-HASURA_CLAIMS_NAMESPACE=${18}
+IAM_RELEASE_NAME=$2
+IAM_NAMESPACE=$3
+POSTGRESQL_RELEASE_NAME=$4
+POSTGRESQL_NAMESPACE=$5
+TOPO=$6
+DB_USER=$7
+DB_USER_PASSWORD=$8
+DB_NAME=$9
+ADMIN_USER_EMAIL=${10}
+AUTH_ADMIN_PASSWORD=${11}
+AUTH_ALMIGHTY_API_KEY=${12}
+AUTH_SERVERLESS_API_KEY=${13}
+AUTH_ISSUER=${14}
+MAIL_SERVER_HOST=${15}
+MAIL_SERVER_PORT=${16}
+MAIL_SERVER_USERNAME=${17}
+MAIL_SERVER_PASSWORD=${18}
+MAIL_SERVER_SSL=${19}
+FROM_EMAIL=${20}
+FROM_NAME=${21}
+HASURA_CLAIMS_NAMESPACE=${22}
 
 helm repo add fusionauth https://fusionauth.github.io/charts
 helm repo update
@@ -39,9 +43,9 @@ fi
 
 # TODO: the two kubectl commands must be adapted if we install postgresql-ha (e.g. for production)
 DB_ROOT_USER=postgres
-DB_ROOT_USER_PASSWORD=$(kubectl -n database get secret postgresql -o jsonpath={.data.postgres-password} | base64 -d)
-DB_HOSTNAME=postgresql.database
-DB_PORT=$(kubectl -n database get svc postgresql -o jsonpath='{.spec.ports[?(@.protocol=="TCP")].port}')
+DB_ROOT_USER_PASSWORD=$(kubectl -n ${POSTGRESQL_NAMESPACE} get secret ${POSTGRESQL_RELEASE_NAME} -o jsonpath={.data.postgres-password} | base64 -d)
+DB_HOSTNAME=${POSTGRESQL_RELEASE_NAME}.${POSTGRESQL_NAMESPACE}
+DB_PORT=$(kubectl -n ${POSTGRESQL_NAMESPACE} get svc ${POSTGRESQL_RELEASE_NAME} -o jsonpath='{.spec.ports[?(@.protocol=="TCP")].port}')
 
 sed -i s/RUNTIME_MODE/$RUNTIME_MODE/g ${FUSIONAUTH_VALUES}
 sed -i s/AUTH_ROOT_USER/$DB_ROOT_USER/g ${FUSIONAUTH_VALUES}
@@ -88,8 +92,6 @@ EOT
 
 cat $INDENTED_KICKSTART_JSON >> ${FUSIONAUTH_VALUES}
 
-NAMESPACE=iam
-
-helm install fusionauth fusionauth/fusionauth \
-  --create-namespace --namespace ${NAMESPACE} \
+helm install ${IAM_RELEASE_NAME} fusionauth/fusionauth \
+  --create-namespace --namespace ${IAM_NAMESPACE} \
   -f ${FUSIONAUTH_VALUES}

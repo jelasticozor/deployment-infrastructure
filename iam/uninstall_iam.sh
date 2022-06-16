@@ -1,7 +1,13 @@
 #! /bin/sh
 
-NAMESPACE=iam
+if [ "$#" -ne "2" ] ; then
+  echo "Usage: $0 <releaseName> <namespace>"
+  exit 1
+fi
 
-helm uninstall --namespace ${NAMESPACE} fusionauth
+RELEASE_NAME=$1
+NAMESPACE=$2
+
+helm uninstall --namespace ${NAMESPACE} ${RELEASE_NAME}
 
 kubectl delete namespace ${NAMESPACE}

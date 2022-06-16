@@ -13,6 +13,7 @@ helm repo add kongz https://charts.kong-z.com
 helm repo update
 
 NAMESPACE=graylog
+RELEASE_NAME=graylog
 
 kubectl create namespace ${NAMESPACE}
 
@@ -24,5 +25,5 @@ helm install --namespace ${NAMESPACE} elasticsearch elastic/elasticsearch \
   -f /tmp/elasticsearch-values.yaml
 
 wget "${BASE_URL}/logs-aggregation/graylog-values.yaml" -O /tmp/graylog-values.yaml
-helm install --namespace ${NAMESPACE} graylog kongz/graylog \
+helm install --namespace ${NAMESPACE} ${RELEASE_NAME} kongz/graylog \
   -f /tmp/graylog-values.yaml
