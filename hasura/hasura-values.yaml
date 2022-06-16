@@ -2,7 +2,7 @@
 imageConfig:
   repository: hasura/graphql-engine
   pullPolicy: IfNotPresent
-   tag: v2.8.0
+  tag: v2.8.0
 devMode: true
 replicaCount: 1
 log:
@@ -39,8 +39,10 @@ ingress:
   # hosts:
   #   - name: my-service.domain1.com
   annotations: {}
-postgres:
+postgresql:
   enabled: false
+  service:
+    port: POSTGRESQL_PORT
 pgClient:
   external:
     enabled: true
