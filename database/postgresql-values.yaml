@@ -2,7 +2,7 @@
 global:
   storageClass: jelastic-dynamic-volume
 image:
-  tag: 12
+  tag: 14
 architecture: standalone
 primary:
   initdb:
