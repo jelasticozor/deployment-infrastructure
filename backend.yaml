@@ -132,6 +132,8 @@ globals:
   AUTH_SERVERLESS_API_KEY: ${fn.password(40)}
   JWT_KEY_ALGORITHM: RS256
 
+# TODO: we need more than 32 cloudlets in a worker node in the development configuration
+
 onInstall:
   - computeOptionalParams
   - installCluster
