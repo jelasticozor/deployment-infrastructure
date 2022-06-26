@@ -44,8 +44,8 @@ fi
 # TODO: the two kubectl commands must be adapted if we install postgresql-ha (e.g. for production)
 DB_ROOT_USER=postgres
 DB_ROOT_USER_PASSWORD=$(kubectl -n ${POSTGRESQL_NAMESPACE} get secret ${POSTGRESQL_RELEASE_NAME} -o jsonpath={.data.postgres-password} | base64 -d)
-DB_HOSTNAME=${POSTGRESQL_RELEASE_NAME}.${POSTGRESQL_NAMESPACE}
-DB_PORT=$(kubectl -n ${POSTGRESQL_NAMESPACE} get svc ${POSTGRESQL_RELEASE_NAME} -o jsonpath='{.spec.ports[?(@.protocol=="TCP")].port}')
+DB_HOSTNAME=${POSTGRESQL_RELEASE_NAME}-primary.${POSTGRESQL_NAMESPACE}
+DB_PORT=$(kubectl -n ${POSTGRESQL_NAMESPACE} get svc ${POSTGRESQL_RELEASE_NAME}-primary -o jsonpath='{.spec.ports[?(@.protocol=="TCP")].port}')
 
 sed -i s/RUNTIME_MODE/$RUNTIME_MODE/g ${FUSIONAUTH_VALUES}
 sed -i s/AUTH_ROOT_USER/$DB_ROOT_USER/g ${FUSIONAUTH_VALUES}
