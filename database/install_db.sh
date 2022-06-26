@@ -15,7 +15,7 @@ FUSIONAUTH_DB_NAME=$7
 FUSIONAUTH_DB_USERNAME=$8
 FUSIONAUTH_DB_PASSWORD=$9
 
-SECRET_NAME=postgresql-secret
+SECRET_NAME=postgresql
 
 kubectl create namespace ${NAMESPACE}
 
