@@ -49,6 +49,6 @@ pgClient:
     host: POSTGRESQL_HOSTNAME
     port: POSTGRESQL_PORT
     username: POSTGRESQL_USERNAME
-    password: POSTGRESQL_PASSWORD
+    password: "POSTGRESQL_PASSWORD"
     database: POSTGRESQL_DATABASE_NAME
     
