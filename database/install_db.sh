@@ -15,12 +15,28 @@ FUSIONAUTH_DB_NAME=$7
 FUSIONAUTH_DB_USERNAME=$8
 FUSIONAUTH_DB_PASSWORD=$9
 
+SECRET_NAME=postgresql-secret
+
+kubectl create namespace ${NAMESPACE}
+
+cat <<EOF | kubectl create -n ${NAMESPACE} -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${SECRET_NAME}
+type: Opaque
+data:
+  postgres-password: $(head -c 20 /dev/random | base64)
+  replication-password: $(head -c 20 /dev/random | base64)
+EOF
+
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 POSTGRES_VALUES=/tmp/postgresql-values.yaml
 wget "${BASE_URL}/database/postgresql-values.yaml" -O ${POSTGRES_VALUES}
 
+sed -i s/SECRET_NAME/${SECRET_NAME}/g ${POSTGRES_VALUES}
 sed -i s/HASURA_DB_USERNAME/${HASURA_DB_USERNAME}/g ${POSTGRES_VALUES}
 sed -i s/HASURA_DB_PASSWORD/${HASURA_DB_PASSWORD}/g ${POSTGRES_VALUES}
 sed -i s/HASURA_DB_NAME/${HASURA_DB_NAME}/g ${POSTGRES_VALUES}

@@ -3,7 +3,9 @@ global:
   storageClass: jelastic-dynamic-volume
 image:
   tag: 14.3.0-debian-11-r0
-architecture: standalone
+architecture: replication
+auth:
+  existingSecret: SECRET_NAME
 primary:
   initdb:
     scripts:
