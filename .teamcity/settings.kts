@@ -25,12 +25,21 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
+    params {
+        param("teamcity.ui.settings.readOnly", "true")
+    }
 
-    subProject(Jelasticozor_Infrastructure_Development)
+    subProject(Development)    
+    subProject(Production)
 }
 
 
-object Jelasticozor_Infrastructure_Development : Project({
+object Development : Project({
     id("Development")
     name = "Development"
+})
+
+object Production : Project({
+    id("Production")
+    name = "Production"
 })
