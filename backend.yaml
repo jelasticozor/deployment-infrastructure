@@ -1,6 +1,8 @@
 type: install
 name: Jelasticozor Backend Cluster
-baseUrl: https://gitlab.hidora.com/softozor/jelasticozor/infrastructure/-/raw/master
+baseUrl: https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master
+
+ssl: false
 
 settings:
   fields:
@@ -139,7 +141,7 @@ globals:
 onInstall:
   - computeOptionalParams
   - installCluster
-  # TODO: install ssl
+  - installSsl
 
 actions:
   computeOptionalParams:
@@ -188,10 +190,53 @@ actions:
         dashboard: general
         ingress-controller: Nginx
         storage: true
+        # TODO: we will very likely not use this feature like that; we don't want to have an ingress to the server API endpoint!
         api: true
         monitoring: true
         version: ${settings.kubernetesVersion}
         jaeger: false
+  installSsl:
+    - addLoadBalancer
+    - installAddon:
+        id: letsencrypt
+        settings:
+          externalDomains: ${globals.EXTERNAL_DOMAINS}
+    # TODO: they are all docker nodes in the end, so the following commands are not reliable
+    - closeFromOutsideWorld:
+        nodeGroup: cp
+        relatedNodeGroup: bl
+    - closeFromOutsideWorld:
+        nodeGroup: k8sm
+        relatedNodeGroup: bl
+    - autoRedirectToHttps
+  addLoadBalancer:
+    - addNodes:
+        - nodeType: nginx-dockerized
+          fixedCloudlets: 1
+          flexibleCloudlets: 4
+  closeFromOutsideWorld:
+    script: https://raw.githubusercontent.com/jelasticozor/jelastic-common/master/security/closeNodeGroupFromOutsideWorld.js
+    nodeGroup: ${this.nodeGroup}
+    relatedNodeGroup: ${this.relatedNodeGroup}
+  autoRedirectToHttps:
+    - cmd[bl]: wget ${baseUrl}/conf/nginx/ssl.conf -O /etc/nginx/conf.d/ssl.conf
+    - cmd[bl]:
+        - sed -i '/#GFADMIN/,/TCP\ SECTION\ PROTOTYPE/d' /etc/nginx/nginx-jelastic.conf
+        - wget ${baseUrl}/conf/nginx/https_redirection.conf -O /tmp/https_redirection.conf
+        - cat /tmp/https_redirection.conf >> /etc/nginx/nginx-jelastic.conf
+      user: root
+    - restartContainers[bl]
+
+addons:
+- id: letsencrypt
+  name: letsencrypt
+  onInstall:
+  - install:
+      envName: ${env.envName}
+      nodeGroup: bl
+      jps: https://raw.githubusercontent.com/jelastic-jps/lets-encrypt/blob/master/manifest.jps
+      settings:
+        customDomains: ${settings.externalDomains}
 
 # TODO: fix this!
 # - provide hasura endpoint
