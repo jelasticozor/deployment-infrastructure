@@ -47,5 +47,5 @@ sed -i s/JWT_ISSUER/${JWT_ISSUER}/g ${HASURA_VALUES}
 NAMESPACE="api"
 RELEASE_NAME="hasura"
 
-helm install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} platyplus/hasura \
+helm upgrade --install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} platyplus/hasura \
   -f ${HASURA_VALUES}

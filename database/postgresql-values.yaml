@@ -2,9 +2,12 @@
 global:
   storageClass: jelastic-dynamic-volume
 image:
-  tag: 14.3.0-debian-11-r0
+  tag: 15.1.0-debian-11-r0
 architecture: replication
+readReplicas:
+  replicaCount: 2
 auth:
+  enablePostgresUser: true
   existingSecret: SECRET_NAME
 primary:
   initdb:

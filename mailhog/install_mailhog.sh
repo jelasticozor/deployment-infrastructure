@@ -14,5 +14,5 @@ NAMESPACE=$2
 RELEASE_NAME=$3
 
 wget "${BASE_URL}/mailhog/mailhog-values.yaml" -O /tmp/mailhog-values.yaml
-helm install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} codecentric/mailhog \
+helm upgrade --install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} codecentric/mailhog \
   -f /tmp/mailhog-values.yaml

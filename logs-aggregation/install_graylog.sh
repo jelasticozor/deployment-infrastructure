@@ -25,5 +25,5 @@ helm install --namespace ${NAMESPACE} elasticsearch elastic/elasticsearch \
   -f /tmp/elasticsearch-values.yaml
 
 wget "${BASE_URL}/logs-aggregation/graylog-values.yaml" -O /tmp/graylog-values.yaml
-helm install --namespace ${NAMESPACE} ${RELEASE_NAME} kongz/graylog \
+helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} kongz/graylog \
   -f /tmp/graylog-values.yaml

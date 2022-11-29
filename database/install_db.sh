@@ -46,5 +46,5 @@ sed -i s/FUSIONAUTH_DB_USERNAME/${FUSIONAUTH_DB_USERNAME}/g ${POSTGRES_VALUES}
 sed -i s/FUSIONAUTH_DB_PASSWORD/${FUSIONAUTH_DB_PASSWORD}/g ${POSTGRES_VALUES}
 sed -i s/FUSIONAUTH_DB_NAME/${FUSIONAUTH_DB_NAME}/g ${POSTGRES_VALUES}
 
-helm install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} bitnami/postgresql \
+helm upgrade --install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} bitnami/postgresql \
   -f ${POSTGRES_VALUES} --wait

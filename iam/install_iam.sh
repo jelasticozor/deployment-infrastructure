@@ -92,6 +92,6 @@ EOT
 
 cat $INDENTED_KICKSTART_JSON >> ${FUSIONAUTH_VALUES}
 
-helm install ${IAM_RELEASE_NAME} fusionauth/fusionauth \
+helm upgrade --install ${IAM_RELEASE_NAME} fusionauth/fusionauth \
   --create-namespace --namespace ${IAM_NAMESPACE} \
   -f ${FUSIONAUTH_VALUES}
