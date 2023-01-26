@@ -3,6 +3,7 @@ imageConfig:
   repository: hasura/graphql-engine
   pullPolicy: IfNotPresent
   tag: v2.8.0
+# TODO: this value should be false in production
 devMode: true
 replicaCount: 1
 log:
@@ -33,7 +34,7 @@ unauthorizedRole: anonymous
 ingress:
   enabled: false
   className: nginx
-  subdomain: hasura # in conjuction with .Values.global.ingress.domain
+  subdomain: hasura # in conjunction with .Values.global.ingress.domain
   tls:
     enabled: false
   # hosts:
