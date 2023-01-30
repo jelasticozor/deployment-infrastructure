@@ -162,13 +162,13 @@ actions:
       envName: ${globals.ENV_NAME}
       settings:
         # TODO: remove hello-kubernetes
-        # TODO: install rabbitmq
         deploy: cmd
         cmd: |-
           [ "${settings.topo}" = "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh -s ${baseUrl} ${globals.MAILHOG_NAMESPACE} ${globals.MAILHOG_RELEASE_NAME} 
           curl -fsSL ${baseUrl}/database/install_db.sh | /bin/sh -s ${baseUrl} ${globals.POSTGRESQL_RELEASE_NAME} ${globals.POSTGRESQL_NAMESPACE} ${globals.HASURA_DB_NAME} ${globals.HASURA_DB_USERNAME} ${globals.HASURA_DB_PASSWORD} ${globals.AUTH_DB_NAME} ${globals.AUTH_DB_USERNAME} ${globals.AUTH_DB_PASSWORD} ${globals.POSTGRES_PASSWORD} ${globals.POSTGRES_REPLICATION_PASSWORD}
           curl -fsSL ${baseUrl}/faas/install_faas.sh | /bin/sh
-          curl -fsSL ${baseUrl}/iam/install_iam.sh | /bin/sh -s "${baseUrl}" "${globals.AUTH_RELEASE_NAME}" "${globals.AUTH_NAMESPACE}" "${globals.POSTGRESQL_RELEASE_NAME}" "${globals.POSTGRESQL_NAMESPACE}" "${settings.topo}" "${globals.AUTH_DB_USERNAME}" "${globals.AUTH_DB_PASSWORD}" "${globals.AUTH_DB_NAME}" "${globals.USER_EMAIL}" "${globals.AUTH_ADMIN_PASSWORD}" "${globals.AUTH_ALMIGHTY_API_KEY}" "${globals.AUTH_SERVERLESS_API_KEY}" "${settings.authIssuer}" "${globals.MAIL_SERVER_HOST}" "${globals.MAIL_SERVER_PORT}" "${globals.MAIL_SERVER_USERNAME}" "${globals.MAIL_SERVER_PASSWORD}" "${globals.MAIL_SERVER_SSL}" "${settings.fromEmail}" "${settings.fromName}" "${globals.HASURA_CLAIMS_NAMESPACE}" 
+          curl -fsSL ${baseUrl}/iam/install_iam.sh | /bin/sh -s "${baseUrl}" "${globals.AUTH_RELEASE_NAME}" "${globals.AUTH_NAMESPACE}" "${globals.POSTGRESQL_RELEASE_NAME}" "${globals.POSTGRESQL_NAMESPACE}" "${settings.topo}" "${globals.AUTH_DB_USERNAME}" "${globals.AUTH_DB_PASSWORD}" "${globals.AUTH_DB_NAME}" "${globals.USER_EMAIL}" "${globals.AUTH_ADMIN_PASSWORD}" "${globals.AUTH_ALMIGHTY_API_KEY}" "${globals.AUTH_SERVERLESS_API_KEY}" "${settings.authIssuer}" "${globals.MAIL_SERVER_HOST}" "${globals.MAIL_SERVER_PORT}" "${globals.MAIL_SERVER_USERNAME}" "${globals.MAIL_SERVER_PASSWORD}" "${globals.MAIL_SERVER_SSL}" "${settings.fromEmail}" "${settings.fromName}" "${globals.HASURA_CLAIMS_NAMESPACE}"
+          curl -fsSl ${baseUrl}/message-queue/install_mq.sh | /bin/sh -s "${baseUrl}" ${settings.topo}"
 #          curl -fsSL ${baseUrl}/hasura/install_hasura.sh | /bin/sh -s "${baseUrl}" "${globals.POSTGRESQL_RELEASE_NAME}" "${globals.POSTGRESQL_NAMESPACE}" "${globals.AUTH_RELEASE_NAME}" "${globals.AUTH_NAMESPACE}" "${globals.HASURA_DB_USERNAME}" "${globals.HASURA_DB_PASSWORD}" "${globals.HASURA_DB_NAME}" "${globals.HASURA_ADMIN_SECRET}" "${globals.JWT_KEY_ALGORITHM}" "${globals.HASURA_CLAIMS_NAMESPACE}" "${settings.authIssuer}" 
         topo: ${settings.topo}
         dashboard: none
