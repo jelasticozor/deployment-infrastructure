@@ -1,0 +1,41 @@
+# Production values for chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+auth:
+  username: rabbitmq_admin
+  # password is generated automatically
+
+service:
+  type: ClusterIP
+  port: 5672
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: true
+  storageClass: jelastic-dynamic-volume
+  size: 8Gi
+
+serviceAccount:
+  create: true
+
+rbac:
+  create: true
+
+memoryHighWatermark:
+  enabled: true
+  type: 'relative'
+  # recommended value is between 0.4 and 0.7: https://www.rabbitmq.com/production-checklist.html#resource-limits-ram
+  value: 0.55
+
+replicaCount: REPLICA_COUNT
+
+resources:
+  limits:
+    cpu: 2
+    memory: 2Gi
+  requests:
+    cpu: 1
+    memory: 2Gi
