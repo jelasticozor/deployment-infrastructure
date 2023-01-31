@@ -161,7 +161,6 @@ actions:
       displayName: Jelasticozor Engine
       envName: ${globals.ENV_NAME}
       settings:
-        # TODO: remove hello-kubernetes
         deploy: cmd
         cmd: |-
           [ "${settings.topo}" = "0-dev" ] && curl -fsSL ${baseUrl}/mailhog/install_mailhog.sh | /bin/sh -s ${baseUrl} ${globals.MAILHOG_NAMESPACE} ${globals.MAILHOG_RELEASE_NAME} 
