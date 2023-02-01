@@ -1,5 +1,6 @@
 import common.templates.NexusDockerLogin
 import integration.FoundationsDeploymentBuild
+import integration.FoundationsDestructionBuild
 import jetbrains.buildServer.configs.kotlin.*
 
 /*
@@ -43,6 +44,10 @@ project {
             dockerTag = dockerTag
         )
         buildType(foundationsDeploymentBuild)
+        val foundationsDestructionBuild = FoundationsDestructionBuild(
+            dockerTag = dockerTag
+        )
+        buildType(foundationsDestructionBuild)
     }
 
     subProject {

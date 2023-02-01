@@ -12,7 +12,7 @@ class FoundationsDeploymentBuild(
         NexusDockerLogin
     )
 
-    name = "Foundations"
+    name = "Deploy Foundations"
 
     vcs {
         root(DslContext.settingsRoot)
