@@ -1,3 +1,5 @@
+import common.templates.NexusDockerLogin
+import integration.FoundationsDeploymentBuild
 import jetbrains.buildServer.configs.kotlin.*
 
 /*
@@ -29,17 +31,22 @@ project {
         param("teamcity.ui.settings.readOnly", "true")
     }
 
-    subProject(Development)    
-    subProject(Production)
+    template(NexusDockerLogin)
+
+    val dockerTag = "e24febf1"
+
+    subProject {
+        id("Development")
+        name = "Development"
+
+        val foundationsDeploymentBuild = FoundationsDeploymentBuild(
+            dockerTag = dockerTag
+        )
+        buildType(foundationsDeploymentBuild)
+    }
+
+    subProject {
+        id("Production")
+        name = "Production"
+    }
 }
-
-
-object Development : Project({
-    id("Development")
-    name = "Development"
-})
-
-object Production : Project({
-    id("Production")
-    name = "Production"
-})

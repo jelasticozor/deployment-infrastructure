@@ -1,0 +1,4 @@
+{
+  "nodeType": "postgres14",
+  "is_pgpool2": "true"
+}
