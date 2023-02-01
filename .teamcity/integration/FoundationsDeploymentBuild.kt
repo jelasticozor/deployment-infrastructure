@@ -26,5 +26,12 @@ class FoundationsDeploymentBuild(
             dockerToolsTag = dockerTag,
             workingDir = "./database"
         )
+        createEnvironment(
+            envName = "jelasticozor-engine",
+            manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
+            jsonSettingsFile = "settings.json",
+            dockerToolsTag = dockerTag,
+            workingDir = "./kubernetes"
+        )
     }
 })

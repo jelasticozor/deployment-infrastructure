@@ -1,0 +1,11 @@
+{
+  "deploy": "cmd",
+  "cmd": "echo 'do nothing'",
+  "topo": "0-dev",
+  "dashboard": "none",
+  "ingress-controller": "Nginx",
+  "storage": "true",
+  "api": "true",
+  "monitoring": "true",
+  "jaeger": "false"
+}
