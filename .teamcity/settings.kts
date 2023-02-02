@@ -36,22 +36,12 @@ project {
 
     val dockerTag = "e24febf1"
 
-    subProject {
-        id("Development")
-        name = "Development"
-
-        val foundationsDeploymentBuild = FoundationsDeploymentBuild(
-            dockerTag = dockerTag
-        )
-        buildType(foundationsDeploymentBuild)
-        val foundationsDestructionBuild = FoundationsDestructionBuild(
-            dockerTag = dockerTag
-        )
-        buildType(foundationsDestructionBuild)
-    }
-
-    subProject {
-        id("Production")
-        name = "Production"
-    }
+    val foundationsDeploymentBuild = FoundationsDeploymentBuild(
+        dockerTag = dockerTag
+    )
+    buildType(foundationsDeploymentBuild)
+    val foundationsDestructionBuild = FoundationsDestructionBuild(
+        dockerTag = dockerTag
+    )
+    buildType(foundationsDestructionBuild)
 }

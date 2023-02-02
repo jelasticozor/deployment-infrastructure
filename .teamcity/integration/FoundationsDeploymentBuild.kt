@@ -32,6 +32,7 @@ class FoundationsDeploymentBuild(
             dockerToolsTag = dockerTag,
             workingDir = "./database"
         )
+        // TODO: initialize database with hasura and fusionauth tables
         // TODO: this should publish the success text in the artifacts
         createEnvironment(
             envName = "jelasticozor-engine",
@@ -39,6 +40,13 @@ class FoundationsDeploymentBuild(
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes"
+        )
+        createEnvironment(
+            envName = "jelasticozor-engine",
+            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master/ssl.yaml",
+            jsonSettingsFile = "settings.json",
+            dockerToolsTag = dockerTag,
+            workingDir = "./nginx"
         )
         // TODO: install helm charts
     }

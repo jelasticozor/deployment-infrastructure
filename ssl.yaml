@@ -69,6 +69,6 @@ addons:
   - install:
       envName: ${env.envName}
       nodeGroup: bl
-      jps: https://raw.githubusercontent.com/jelastic-jps/lets-encrypt/blob/master/manifest.jps
+      jps: https://raw.githubusercontent.com/jelastic-jps/lets-encrypt/master/manifest.jps
       settings:
         customDomains: ${settings.externalDomains}
