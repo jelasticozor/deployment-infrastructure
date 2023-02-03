@@ -27,8 +27,6 @@ class FoundationsDeploymentBuild(
     val successTextKubernetes = "success_text_kubernetes.txt"
 
     steps {
-        // TODO: this should publish the success text in the artifacts
-        // TODO: this should create the success text file and parse it and publish the relevant data over teamcity
         createEnvironment(
             envName = "jelasticozor-db",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
@@ -58,4 +56,9 @@ class FoundationsDeploymentBuild(
         //)
         // TODO: install helm charts
     }
+
+    artifactRules = """
+        $successTextPostgres, 
+        $successTextKubernetes,
+    """.trimIndent()
 })
