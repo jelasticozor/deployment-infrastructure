@@ -34,7 +34,7 @@ project {
 
     template(NexusDockerLogin)
 
-    val dockerTag = "6cdf64c2"
+    val dockerTag = "1476dde7"
 
     val foundationsDeploymentBuild = FoundationsDeploymentBuild(
         dockerTag = dockerTag
