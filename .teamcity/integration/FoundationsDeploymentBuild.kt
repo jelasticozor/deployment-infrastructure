@@ -1,8 +1,8 @@
 package integration
 
 import common.templates.NexusDockerLogin
-import jelastic.createEnvironment
-import jelastic.publishEnvVarsFromSuccessText
+import common.jelastic.createEnvironment
+import common.jelastic.publishEnvVarsFromSuccessText
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 

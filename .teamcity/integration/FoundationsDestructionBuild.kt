@@ -1,7 +1,7 @@
 package integration
 
 import common.templates.NexusDockerLogin
-import jelastic.deleteEnvironment
+import common.jelastic.deleteEnvironment
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 
