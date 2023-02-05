@@ -30,8 +30,9 @@ class FoundationsDeploymentBuild(
         createEnvironment(
             envName = "jelasticozor-db",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
+            // PostgresHostname: ${'$'}{nodes.sqldb.master.url}  \nPostgresAdminUser: webadmin  \nPostgresAdminPassword: ${'$'}{nodes.sqldb.password}\n
             successTextQuery = """
-                PostgresHostname: ${'$'}{nodes.sqldb.master.url}  \nPostgresAdminUser: webadmin  \nPostgresAdminPassword: ${'$'}{nodes.sqldb.password}\n 
+                PostgresAdminUser: webadmin
             """.trimIndent(),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
