@@ -32,7 +32,7 @@ class FoundationsDeploymentBuild(
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
             // PostgresHostname: ${'$'}{nodes.sqldb.master.url}  \nPostgresAdminUser: webadmin  \nPostgresAdminPassword: ${'$'}{nodes.sqldb.password}\n
             successTextQuery = """
-                PostgresAdminUser: webadmin
+                PostgresAdminUser: webadmin  \n
             """.trimIndent(),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
