@@ -5,23 +5,16 @@ cd "${0%/*}"
 RELEASE_NAME=fusionauth
 NAMESPACE=iam
 
-ADMIN_USER_EMAIL=softozor@gmail.com
-
 ADMIN_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 ALMIGHTY_API_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 SERVERLESS_API_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 
-cat <<EOF | kubectl create -n ${NAMESPACE} -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: fusionauth
-type: Opaque
-data:
-  admin-password: $(echo "${ADMIN_PASSWORD}" | base64)
-  almighty-api-key: $(echo "${ALMIGHTY_API_KEY}" | base64)
-  serverless-api-key: $(echo "${SERVERLESS_API_KEY}" | base64)
-EOF
+kubectl create ns ${NAMESPACE}
+
+kubectl create -n ${NAMESPACE} secret generic fusionauth \
+  --from-literal=admin-password="${ADMIN_PASSWORD}" \
+  --from-literal=almighty-api-key="${ALMIGHTY_API_KEY}" \
+  --from-literal=serverless-api-key="${SERVERLESS_API_KEY}"
 
 AUTH_ISSUER=jelasticozor.com
 
@@ -44,6 +37,8 @@ FUSIONAUTH_VALUES=values.yaml
 KICKSTART_JSON=kickstart.json
 INDENTED_KICKSTART_JSON=indented-kickstart.json
 KICKSTART_PY=setup_kickstart.py
+
+ADMIN_USER_EMAIL=softozor@gmail.com
 
 python $KICKSTART_PY --admin-email=${ADMIN_USER_EMAIL} \
     --admin-password "${ADMIN_PASSWORD}" \
@@ -76,12 +71,12 @@ EOT
 cat $INDENTED_KICKSTART_JSON >> ${FUSIONAUTH_VALUES}
 
 helm upgrade --install ${RELEASE_NAME} fusionauth/fusionauth \
-  --create-namespace --namespace ${NAMESPACE} \
+  --namespace ${NAMESPACE} \
   -f ${FUSIONAUTH_VALUES} \
   --set database.root.user="${DATABASE_ADMIN_USER}" \
   --set database.root.password="${DATABASE_ADMIN_PASSWORD}" \
   --set database.host="${DATABASE_HOSTNAME}" \
-  --set database.port="${DATABASE_PORT}" \
+  --set database.port=${DATABASE_PORT} \
   --set database.name="${FUSIONAUTH_DB_NAME}" \
   --set database.user="${FUSIONAUTH_DB_USERNAME}" \
   --set database.password="${FUSIONAUTH_DB_PASSWORD}"

@@ -13,27 +13,27 @@ service:
 ingress:
   enabled: false
 
-persistence:
-  enabled: true
-  storageClass: jelastic-dynamic-volume
-  size: 8Gi
+#persistence:
+#  enabled: true
+#  storageClass: jelastic-dynamic-volume
+#  size: 8Gi
 
-serviceAccount:
-  create: true
-
-rbac:
-  create: true
-
-memoryHighWatermark:
-  enabled: true
-  type: 'relative'
-  # recommended value is between 0.4 and 0.7: https://www.rabbitmq.com/production-checklist.html#resource-limits-ram
-  value: 0.55
-
-resources:
-  limits:
-    cpu: 2
-    memory: 2Gi
-  requests:
-    cpu: 1
-    memory: 2Gi
+#serviceAccount:
+#  create: true
+#
+#rbac:
+#  create: true
+#
+#memoryHighWatermark:
+#  enabled: true
+#  type: 'relative'
+#  # recommended value is between 0.4 and 0.7: https://www.rabbitmq.com/production-checklist.html#resource-limits-ram
+#  value: 0.55
+#
+#resources:
+#  limits:
+#    cpu: 2
+#    memory: 2Gi
+#  requests:
+#    cpu: 1
+#    memory: 2Gi
