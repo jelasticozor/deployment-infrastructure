@@ -4,6 +4,7 @@ import common.jelastic.createEnvironment
 import common.templates.NexusDockerLogin
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 
 class FoundationsDeploymentBuild(
     dockerTag: String,
@@ -29,7 +30,7 @@ class FoundationsDeploymentBuild(
             envName = "jelasticozor-db",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
             envPropsQueries = listOf(
-                Pair("DATABASE_HOSTNAME", "${'$'}{nodes.sqldb.master.url}"),
+                Pair("DATABASE_URL", "${'$'}{nodes.sqldb.master.url}"),
                 Pair("DATABASE_PORT", "5432"),
                 Pair("DATABASE_ADMIN_USER", "webadmin"),
                 Pair("DATABASE_ADMIN_PASSWORD", "${'$'}{nodes.sqldb.password}")
@@ -38,6 +39,14 @@ class FoundationsDeploymentBuild(
             dockerToolsTag = dockerTag,
             workingDir = databaseFolder,
         )
+        script {
+            name = "Publish Database Hostname"
+            scriptContent = """
+                #! /bin/sh
+                
+                echo "##teamcity[setParameter name='DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
+            """.trimIndent()
+        }
         createHasuraDatabase(workingDir = databaseFolder)
         createFusionAuthDatabase(workingDir = databaseFolder)
         setupHasuraDatabase(workingDir = databaseFolder)
