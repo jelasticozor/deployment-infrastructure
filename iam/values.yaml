@@ -1,0 +1,12 @@
+# https://github.com/FusionAuth/charts
+replicaCount: 1
+image:
+  tag: 1.42.1
+database:
+  protocol: postgresql
+app:
+  runtimeMode: development
+search:
+  engine: database
+ingress:
+  enabled: false

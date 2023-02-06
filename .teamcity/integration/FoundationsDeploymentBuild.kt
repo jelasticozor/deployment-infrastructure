@@ -48,9 +48,10 @@ class FoundationsDeploymentBuild(
                 echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
             """.trimIndent()
         }
+        // TODO: the hasura DB setup should be done during application deployment
         createHasuraDatabase(workingDir = databaseFolder)
-        createFusionAuthDatabase(workingDir = databaseFolder)
         setupHasuraDatabase(workingDir = databaseFolder)
+        createFusionAuthDatabase(workingDir = databaseFolder)
         createEnvironment(
             envName = "jelasticozor-engine",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
@@ -63,14 +64,17 @@ class FoundationsDeploymentBuild(
             workingDir = "./kubernetes",
             region = "new",
         )
-        // TODO: reactivate when jelastic bug with addition of nginx node is fixed
-        //createEnvironment(
-        //    envName = "jelasticozor-engine",
-        //    manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master/ssl.yaml",
-        //    jsonSettingsFile = "settings.json",
-        //    dockerToolsTag = dockerTag,
-        //    workingDir = "./nginx"
-        //)
-        // TODO: install helm charts
+        createEnvironment(
+            envName = "jelasticozor-engine",
+            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master/ssl.yaml",
+            jsonSettingsFile = "settings.json",
+            dockerToolsTag = dockerTag,
+            workingDir = "./nginx",
+        )
+        // TODO: in production, we don't install the same helm charts and we don't apply the same parameters
+        installHelmCharts(
+            workingDir = ".",
+            dockerToolsTag = dockerTag,
+        )
     }
 })

@@ -1,5 +1,7 @@
 #! /bin/sh
 
+cd "${0%/*}"
+
 helm repo add openfaas https://openfaas.github.io/faas-netes/
 helm repo update
 

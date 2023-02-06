@@ -30,8 +30,6 @@ memoryHighWatermark:
   # recommended value is between 0.4 and 0.7: https://www.rabbitmq.com/production-checklist.html#resource-limits-ram
   value: 0.55
 
-replicaCount: REPLICA_COUNT
-
 resources:
   limits:
     cpu: 2

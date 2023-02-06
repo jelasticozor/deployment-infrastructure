@@ -2,6 +2,8 @@ type: update
 name: Jelasticozor Backend Cluster SSL
 baseUrl: https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master
 
+ssl: false
+
 settings:
   fields:
     - name: useDefaultExternalDomain
@@ -49,6 +51,9 @@ actions:
           count: 1
           fixedCloudlets: 1
           flexibleCloudlets: 4
+    - env.control.AddBackends:
+        backendNodeIds: ${nodes.cp.join(id,;)}
+        balancerNodeIds: ${nodes.bl.id}
   closeFromOutsideWorld:
     script: https://raw.githubusercontent.com/jelasticozor/jelastic-common/master/security/closeNodeGroupFromOutsideWorld.js
     nodeGroup: ${this.nodeGroup}
