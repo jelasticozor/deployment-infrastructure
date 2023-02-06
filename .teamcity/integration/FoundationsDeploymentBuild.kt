@@ -22,24 +22,32 @@ class FoundationsDeploymentBuild(
         executionTimeoutMin = 30
     }
 
+    val databaseFolder = "./database"
+
     steps {
         createEnvironment(
             envName = "jelasticozor-db",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
             envPropsQueries = listOf(
                 Pair("DATABASE_HOSTNAME", "${'$'}{nodes.sqldb.master.url}"),
+                Pair("DATABASE_PORT", "5432"),
                 Pair("DATABASE_ADMIN_USER", "webadmin"),
                 Pair("DATABASE_ADMIN_PASSWORD", "${'$'}{nodes.sqldb.password}")
             ),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
-            workingDir = "./database",
+            workingDir = databaseFolder,
         )
-        // TODO: initialize database with hasura and fusionauth tables
+        createHasuraDatabase(workingDir = databaseFolder)
+        createFusionAuthDatabase(workingDir = databaseFolder)
+        setupHasuraDatabase(workingDir = databaseFolder)
         createEnvironment(
             envName = "jelasticozor-engine",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
-            envPropsQueries = listOf(Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"), Pair("KUBERNETES_API_URL", "${'$'}{env.protocol}://${'$'}{env.domain}/api/")),
+            envPropsQueries = listOf(
+                Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"),
+                Pair("KUBERNETES_API_URL", "${'$'}{env.protocol}://${'$'}{env.domain}/api/")
+            ),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes",
