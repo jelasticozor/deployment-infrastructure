@@ -44,7 +44,7 @@ class FoundationsDeploymentBuild(
             scriptContent = """
                 #! /bin/sh
                 
-                echo "##teamcity[setParameter name='DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
+                echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
             """.trimIndent()
         }
         createHasuraDatabase(workingDir = databaseFolder)
