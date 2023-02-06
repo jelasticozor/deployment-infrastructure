@@ -1,8 +1,7 @@
 package integration
 
-import common.templates.NexusDockerLogin
 import common.jelastic.createEnvironment
-import common.jelastic.publishEnvVarsFromSuccessText
+import common.templates.NexusDockerLogin
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 
@@ -30,28 +29,26 @@ class FoundationsDeploymentBuild(
         createEnvironment(
             envName = "jelasticozor-db",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
-            successTextQuery = """
-                PostgresHostname: ${'$'}{nodes.sqldb.master.url}  \nPostgresAdminUser: webadmin  \nPostgresAdminPassword: ${'$'}{nodes.sqldb.password}\n
-            """.trimIndent(),
+            envPropsQueries = listOf(
+                Pair("DATABASE_HOSTNAME", "${'$'}{nodes.sqldb.master.url}"),
+                Pair("DATABASE_ADMIN_USER", "webadmin"),
+                Pair("DATABASE_ADMIN_PASSWORD", "${'$'}{nodes.sqldb.password}")
+            ),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./database",
             outputSuccessTextFile = "../$successTextPostgres",
         )
-        publishEnvVarsFromSuccessText(successTextPostgres, dockerTag)
         // TODO: initialize database with hasura and fusionauth tables
         createEnvironment(
             envName = "jelasticozor-engine",
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
-            successTextQuery = """
-                KubernetesApiToken: ${'$'}{globals.token}  \nRemoteApiEndpoint: ${'$'}{env.protocol}://${'$'}{env.domain}/api/\n
-            """.trimIndent(),
+            envPropsQueries = listOf(Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"), Pair("KUBERNETES_API_URL", "${'$'}{env.protocol}://${'$'}{env.domain}/api/")),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes",
             outputSuccessTextFile = successTextKubernetes
         )
-        publishEnvVarsFromSuccessText(successTextKubernetes, dockerTag)
         // TODO: reactivate when jelastic bug with addition of nginx node is fixed
         //createEnvironment(
         //    envName = "jelasticozor-engine",
