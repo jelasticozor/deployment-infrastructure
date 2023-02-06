@@ -38,6 +38,7 @@ class FoundationsDeploymentBuild(
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = databaseFolder,
+            region = "new",
         )
         script {
             name = "Publish Database Hostname"
@@ -60,6 +61,7 @@ class FoundationsDeploymentBuild(
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes",
+            region = "new",
         )
         // TODO: reactivate when jelastic bug with addition of nginx node is fixed
         //createEnvironment(
