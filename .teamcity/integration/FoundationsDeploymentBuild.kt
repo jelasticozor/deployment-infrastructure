@@ -22,9 +22,6 @@ class FoundationsDeploymentBuild(
         executionTimeoutMin = 30
     }
 
-    val successTextPostgres = "success_text_postgres.txt"
-    val successTextKubernetes = "success_text_kubernetes.txt"
-
     steps {
         createEnvironment(
             envName = "jelasticozor-db",
@@ -37,7 +34,6 @@ class FoundationsDeploymentBuild(
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./database",
-            outputSuccessTextFile = "../$successTextPostgres",
         )
         // TODO: initialize database with hasura and fusionauth tables
         createEnvironment(
@@ -47,7 +43,6 @@ class FoundationsDeploymentBuild(
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes",
-            outputSuccessTextFile = successTextKubernetes
         )
         // TODO: reactivate when jelastic bug with addition of nginx node is fixed
         //createEnvironment(
@@ -59,9 +54,4 @@ class FoundationsDeploymentBuild(
         //)
         // TODO: install helm charts
     }
-
-    artifactRules = """
-        $successTextPostgres, 
-        $successTextKubernetes,
-    """.trimIndent()
 })
