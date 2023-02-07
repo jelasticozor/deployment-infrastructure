@@ -2,7 +2,7 @@
 imageConfig:
   repository: hasura/graphql-engine
   pullPolicy: IfNotPresent
-  tag: v2.8.0
+  tag: v2.18.0
 # TODO: this value should be false in production
 devMode: true
 replicaCount: 1

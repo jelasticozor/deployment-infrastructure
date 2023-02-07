@@ -39,4 +39,4 @@ NAMESPACE="api"
 RELEASE_NAME="hasura"
 
 helm upgrade --install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} nexus/hasura \
-  -f values.yaml
+  -f values.yaml --wait
