@@ -138,9 +138,9 @@
   ],
   "variables": {
     "adminEmail": "softozor@gmail.com",
-    "adminPassword": "Sn0Z3yemkRz6IY3kpzbNJTmUaXzVvM8qFXi7eehw2egJdW23XK8ZqAMG30BAxPJi",
-    "almightyApiKey": "LI012PqEfwMZj67yuJPq1kReEwSQxz9RKRF5uB9laSZ2qiWboRHU1URSCS3iyFEN",
-    "defaultTenantId": "c6c2e3bd-413a-47e0-ac11-9cccd86f91c4",
+    "adminPassword": "my admin password",
+    "almightyApiKey": "24114b81-4207-4b02-bcd5-3bbbb91a66e7",
+    "defaultTenantId": "9d72d134-464e-4542-a42f-6b0ac602f0d2",
     "forgotPasswordEmailTemplateId": "#{UUID()}",
     "fromEmail": "info@no-reply.com",
     "fromName": "info",
@@ -153,7 +153,7 @@
     "mailServerSecurity": "NONE",
     "mailServerUsername": "",
     "registrationVerificationEmailTemplateId": "#{UUID()}",
-    "serverlessApiKey": "HjamAcl7nyhTcnFwxftrP9V0BDWUhcNpjufiLnwro7WnY86HXSTksEzcputZUXPX",
+    "serverlessApiKey": "42f41c94-e41a-492c-891c-c85f2204c639",
     "setPasswordEmailTemplateId": "#{UUID()}",
     "verificationEmailTemplateId": "#{UUID()}"
   }
