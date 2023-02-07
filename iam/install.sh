@@ -59,9 +59,6 @@ sed 's/^/      /' $KICKSTART_JSON > $INDENTED_KICKSTART_JSON
 
 cat <<EOT >> ${FUSIONAUTH_VALUES}
 
-environment:
-- name: FUSIONAUTH_APP_KICKSTART_FILE
-  value: /kickstart/kickstart.json
 kickstart:
   enabled: true
   data:
@@ -76,7 +73,7 @@ helm upgrade --install ${RELEASE_NAME} fusionauth/fusionauth \
   --set database.root.user="${DATABASE_ADMIN_USER}" \
   --set database.root.password="${DATABASE_ADMIN_PASSWORD}" \
   --set database.host="${DATABASE_HOSTNAME}" \
-  --set database.port=${DATABASE_PORT} \
+  --set database.port="${DATABASE_PORT}" \
   --set database.name="${FUSIONAUTH_DB_NAME}" \
   --set database.user="${FUSIONAUTH_DB_USERNAME}" \
   --set database.password="${FUSIONAUTH_DB_PASSWORD}"
