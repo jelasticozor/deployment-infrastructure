@@ -1,4 +1,4 @@
-# https://github.com/platyplus/platyplus/tree/master/charts/hasura
+# https://github.com/softozor/charts/tree/main/softozor/hasura
 imageConfig:
   repository: hasura/graphql-engine
   pullPolicy: IfNotPresent
@@ -50,6 +50,6 @@ pgClient:
     host: POSTGRESQL_HOSTNAME
     port: POSTGRESQL_PORT
     username: POSTGRESQL_USERNAME
-    password: "POSTGRESQL_PASSWORD"
+    password: POSTGRESQL_PASSWORD
     database: POSTGRESQL_DATABASE_NAME
     
