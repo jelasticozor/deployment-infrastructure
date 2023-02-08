@@ -68,7 +68,6 @@ class FoundationsDeploymentBuild(
             dockerToolsTag = dockerTag,
             workingDir = "./nginx",
         )
-        // TODO: in production, we don't install the same helm charts and we don't apply the same parameters
         installHelmCharts(
             workingDir = ".",
             dockerToolsTag = dockerTag,
