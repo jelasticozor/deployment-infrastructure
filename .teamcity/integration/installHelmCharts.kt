@@ -18,8 +18,7 @@ fun BuildSteps.installHelmCharts(workingDir: String, dockerToolsTag: String): Sc
             ./faas/install.sh
             ./iam/install.sh
             ./mq/install.sh
-            # TODO: activate this
-            #./vault/install.sh
+            ./vault/install.sh
         """.trimIndent()
         this.workingDir = workingDir
         dockerImage = "%system.docker-registry.group%/docker-tools/devspace:$dockerToolsTag"

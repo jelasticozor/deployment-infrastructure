@@ -48,9 +48,6 @@ class FoundationsDeploymentBuild(
                 echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
             """.trimIndent()
         }
-        // TODO: the hasura DB setup should be done during application deployment
-        createHasuraDatabase(workingDir = databaseFolder)
-        setupHasuraDatabase(workingDir = databaseFolder)
         createFusionAuthDatabase(workingDir = databaseFolder)
         createEnvironment(
             envName = "jelasticozor-engine",
