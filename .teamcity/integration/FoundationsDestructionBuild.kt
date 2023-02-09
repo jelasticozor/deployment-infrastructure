@@ -24,11 +24,11 @@ class FoundationsDestructionBuild(
 
     steps {
         deleteEnvironment(
-            envName = "jelasticozor-engine",
+            envName = "jelasticozor-engine-staging",
             dockerToolsTag = dockerTag,
         )
         deleteEnvironment(
-            envName = "jelasticozor-db",
+            envName = "jelasticozor-db-staging",
             dockerToolsTag = dockerTag,
         )
     }
