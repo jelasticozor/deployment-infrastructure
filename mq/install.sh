@@ -8,8 +8,8 @@ helm repo update
 NAMESPACE=message-queue
 RELEASE_NAME=rabbitmq
 
-RABBITMQ_PASSWORD=$(kubectl get secret --namespace ${NAMESPACE} ${RELEASE_NAME} -o jsonpath="{.data.rabbitmq-password}" | base64 --decode)
-RABBITMQ_ERLANG_COOKIE=$(kubectl get secret --namespace ${NAMESPACE} ${RELEASE_NAME} -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)
+RABBITMQ_PASSWORD=$(kubectl get secret --namespace ${NAMESPACE} ${RELEASE_NAME} -o jsonpath="{.data.rabbitmq-password}" | base64 -d)
+RABBITMQ_ERLANG_COOKIE=$(kubectl get secret --namespace ${NAMESPACE} ${RELEASE_NAME} -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 -d)
 
 helm upgrade --install --create-namespace --namespace ${NAMESPACE} ${RELEASE_NAME} bitnami/rabbitmq \
   -f https://raw.githubusercontent.com/bitnami/charts/master/bitnami/rabbitmq/values.yaml -f values.yaml \
