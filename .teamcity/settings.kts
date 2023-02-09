@@ -37,7 +37,7 @@ project {
     val dockerTag = "09c2e626"
 
     val foundationsDeploymentBuild = FoundationsDeploymentBuild(
-        dockerTag = dockerTag
+        dockerTag = dockerTag,
     )
     buildType(foundationsDeploymentBuild)
     val foundationsDestructionBuild = FoundationsDestructionBuild(

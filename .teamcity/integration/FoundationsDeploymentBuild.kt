@@ -25,9 +25,12 @@ class FoundationsDeploymentBuild(
 
     val databaseFolder = "./database"
 
+    val dbName = "jelasticozor-db-staging"
+    val clusterName = "jelasticozor-engine-staging"
+
     steps {
         createEnvironment(
-            envName = "jelasticozor-db",
+            envName = dbName,
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
             envPropsQueries = listOf(
                 Pair("DATABASE_URL", "${'$'}{nodes.sqldb.master.url}"),
@@ -50,7 +53,7 @@ class FoundationsDeploymentBuild(
         }
         createFusionAuthDatabase(workingDir = databaseFolder)
         createEnvironment(
-            envName = "jelasticozor-engine",
+            envName = clusterName,
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
             envPropsQueries = listOf(
                 Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"),
@@ -62,12 +65,13 @@ class FoundationsDeploymentBuild(
             region = "new",
         )
         createEnvironment(
-            envName = "jelasticozor-engine",
+            envName = clusterName,
             manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master/ssl.yaml",
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./nginx",
         )
+        publishClusterName(clusterName)
         installHelmCharts(
             workingDir = ".",
             dockerToolsTag = dockerTag,
