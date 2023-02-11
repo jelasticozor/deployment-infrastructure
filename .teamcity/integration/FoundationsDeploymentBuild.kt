@@ -30,6 +30,7 @@ class FoundationsDeploymentBuild(
 
     steps {
         // TODO: we publish sensitive data as environment variables (e.g. passwords, api keys); we should fix that
+        // --> maybe define a dedicated vault for the jelasticozor engine in a separate environment?
         createEnvironment(
             envName = dbName,
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/postgres/v2.0.0/manifest.yaml",
