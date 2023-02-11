@@ -5,14 +5,14 @@ import common.jelastic.deleteEnvironment
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 
-class FoundationsDestructionBuild(
+class Down(
     dockerTag: String,
 ) : BuildType({
     templates(
         NexusDockerLogin
     )
 
-    name = "Destroy Foundations"
+    name = "Down"
 
     vcs {
         root(DslContext.settingsRoot)

@@ -6,14 +6,14 @@ import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 
-class FoundationsDeploymentBuild(
+class Up(
     dockerTag: String,
 ) : BuildType({
     templates(
         NexusDockerLogin
     )
 
-    name = "Deploy Foundations"
+    name = "Up"
 
     vcs {
         root(DslContext.settingsRoot)
