@@ -5,6 +5,7 @@ cd "${0%/*}"
 RELEASE_NAME=fusionauth
 NAMESPACE=iam
 
+# TODO: let the vault generate the following values
 ADMIN_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 ALMIGHTY_API_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 SERVERLESS_API_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
