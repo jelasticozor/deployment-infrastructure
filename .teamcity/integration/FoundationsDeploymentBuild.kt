@@ -87,7 +87,6 @@ class FoundationsDeploymentBuild(
                 done
             """.trimIndent()
         }
-        publishClusterName(clusterName)
         installHelmCharts(
             workingDir = ".",
             dockerToolsTag = dockerTag,
