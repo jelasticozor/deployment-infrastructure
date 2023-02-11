@@ -20,7 +20,7 @@ class FoundationsDeploymentBuild(
     }
 
     failureConditions {
-        executionTimeoutMin = 30
+        executionTimeoutMin = 60
     }
 
     val databaseFolder = "./database"
