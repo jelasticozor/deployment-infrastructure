@@ -10,5 +10,5 @@ cd "${0%/*}"
 
 helm upgrade --install ${RELEASE_NAME} jetstack/cert-manager \
     --namespace="${NAMESPACE}" \
-    --set installCRDs=true \
-    --wait
+    --create-namespace \
+    --set installCRDs=true
