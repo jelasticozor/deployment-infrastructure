@@ -4,9 +4,18 @@ image:
   tag: 1.42.1
 database:
   protocol: postgresql
+  root:
+    user: ${DATABASE_ADMIN_USER}
+    password: ${DATABASE_ADMIN_PASSWORD}
+  host: ${DATABASE_HOSTNAME}
+  port: ${DATABASE_PORT}
+  name: ${FUSIONAUTH_DB_NAME}
+  user: ${FUSIONAUTH_DB_USERNAME}
+  password: ${FUSIONAUTH_DB_PASSWORD}
 app:
   runtimeMode: development
 search:
   engine: database
 ingress:
   enabled: false
+

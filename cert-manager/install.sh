@@ -11,4 +11,5 @@ cd "${0%/*}"
 helm upgrade --install ${RELEASE_NAME} jetstack/cert-manager \
     --namespace="${NAMESPACE}" \
     --create-namespace \
-    --set installCRDs=true
+    --set installCRDs=true \
+    --set controller.ingressClass=nginx

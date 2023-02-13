@@ -68,14 +68,6 @@ EOT
 
 cat $INDENTED_KICKSTART_JSON >> ${FUSIONAUTH_VALUES}
 
-helm upgrade --install ${RELEASE_NAME} fusionauth/fusionauth \
+envsubst < ${FUSIONAUTH_VALUES} | helm upgrade --install ${RELEASE_NAME} fusionauth/fusionauth \
   --namespace ${NAMESPACE} \
-  -f ${FUSIONAUTH_VALUES} \
-  --set database.root.user="${DATABASE_ADMIN_USER}" \
-  --set database.root.password="${DATABASE_ADMIN_PASSWORD}" \
-  --set database.host="${DATABASE_HOSTNAME}" \
-  --set database.port="${DATABASE_PORT}" \
-  --set database.name="${FUSIONAUTH_DB_NAME}" \
-  --set database.user="${FUSIONAUTH_DB_USERNAME}" \
-  --set database.password="${FUSIONAUTH_DB_PASSWORD}"
-
+  -f -
