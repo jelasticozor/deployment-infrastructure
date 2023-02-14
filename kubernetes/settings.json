@@ -1,6 +1,6 @@
 {
   "deploy": "cmd",
-  "cmd": "echo 'do nothing'",
+  "cmd": "helm repo add jetstack https://charts.jetstack.io\nhelm repo update\nhelm upgrade --install cert-manager jetstack/cert-manager --namespace=cert-manager --create-namespace --set installCRDs=true --set controller.ingressClass=nginx\nwget https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/cert-manager/production-issuer.yaml -O production-issuer.yaml\nsed -i 's/USER_EMAIL_ADDRESS/laurent@hidora.io/' production-issuer.yaml\nkubectl create -f production-issuer.yaml",
   "topo": "0-dev",
   "dashboard": "none",
   "ingress-controller": "Nginx",
