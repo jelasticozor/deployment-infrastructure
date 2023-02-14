@@ -13,3 +13,5 @@ helm upgrade --install ${RELEASE_NAME} jetstack/cert-manager \
     --create-namespace \
     --set installCRDs=true \
     --set controller.ingressClass=nginx
+
+envsubst < production-issuer.yaml | kubectl create -f -

@@ -59,17 +59,16 @@ class Up(
             manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
             envPropsQueries = listOf(
                 Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"),
-                Pair("KUBERNETES_API_URL", "${'$'}{env.protocol}://${'$'}{env.domain}/api/")
+                // TODO: this will not work, the following api url must be https, but kubectl won't be happy because the certificate is not trusted
+                // TODO: the most secure option to install the helm charts is to install them as part of the kubernetes manifest installation
+                Pair("KUBERNETES_API_URL", "http://${'$'}{nodes.k8sm.master.intIP}:6443"),
+                Pair("FQDN", "${'$'}{env.domain}"),
+                Pair("USER_EMAIL_ADDRESS", "${'$'}user.email")
             ),
             jsonSettingsFile = "settings.json",
             dockerToolsTag = dockerTag,
             workingDir = "./kubernetes",
             region = "new",
-        )
-        createEnvironment(
-            envName = clusterName,
-            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
-            dockerToolsTag = dockerTag,
         )
         script {
             name = "Wait For Kubernetes API"
@@ -77,7 +76,7 @@ class Up(
                 #! /bin/sh
                 
                 for i in ${'$'}(seq 1 120) ; do
-                    status_code=${'$'}(curl -s -o /dev/null -w "%{http_code}" https://$clusterName.hidora.com/api/version)
+                    status_code=${'$'}(curl -s -o /dev/null -w "%{http_code}" ${'$'}KUBERNETES_API_URL/version)
                     if [ "${'$'}status_code" = "200" ] ; then
                         break
                     fi
@@ -87,6 +86,11 @@ class Up(
         }
         installHelmCharts(
             workingDir = ".",
+            dockerToolsTag = dockerTag,
+        )
+        createEnvironment(
+            envName = clusterName,
+            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
             dockerToolsTag = dockerTag,
         )
     }

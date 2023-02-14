@@ -5,7 +5,7 @@
   "dashboard": "none",
   "ingress-controller": "Nginx",
   "storage": "true",
-  "api": "true",
+  "api": "false",
   "monitoring": "true",
   "jaeger": "false"
 }

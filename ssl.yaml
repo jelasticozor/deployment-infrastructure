@@ -1,6 +1,6 @@
 type: update
 name: Jelasticozor Backend Cluster SSL
-baseUrl: https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master
+baseUrl: https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main
 
 onInstall:
   - jelastic.environment.binder.SetExtIpCount[cp]:
