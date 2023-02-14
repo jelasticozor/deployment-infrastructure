@@ -68,10 +68,8 @@ class Up(
         )
         createEnvironment(
             envName = clusterName,
-            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/master/ssl.yaml",
-            jsonSettingsFile = "settings.json",
+            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
             dockerToolsTag = dockerTag,
-            workingDir = "./nginx",
         )
         script {
             name = "Wait For Kubernetes API"
