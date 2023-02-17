@@ -6,3 +6,4 @@ onInstall:
   - jelastic.environment.binder.SetExtIpCount[cp]:
       type: IPV4
       count: 1
+  - jelastic.environment.binder.DeleteSSL
