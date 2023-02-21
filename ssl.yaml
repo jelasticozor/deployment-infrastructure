@@ -7,4 +7,5 @@ onInstall:
       type: IPV4
       count: 1
   - jelastic.environment.control.editenvsettings:
-      settings: { "sslstate": "false" }
+      settings:
+        sslstate: false
