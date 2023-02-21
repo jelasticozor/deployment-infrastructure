@@ -1,0 +1,29 @@
+type: install
+name: Jelasticozor Backend Vault
+baseUrl: https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main
+
+nodes:
+  - nodeGroup: storage
+    nodeType: storage
+    cluster: true
+    diskLimit: 10G
+    displayName: Storage
+  - nodeGroup: cp
+    nodeType: docker
+    cloudlets: 16
+    displayName: Vault
+    image: amd64/vault:1.12.3
+    entrypoint: "docker-entrypoint.sh"
+    cmd: "server -dev -dev-root-token-id=root -log-level info"
+    volumes:
+      - /vault/config
+    volumeMounts:
+      /vault/logs:
+        sourceNodeGroup: storage
+        readOnly: false
+      /vault/file:
+        sourceNodeGroup: storage
+        readOnly: false
+      /vault/config:
+        sourceNodeGroup: storage
+        readOnly: false
