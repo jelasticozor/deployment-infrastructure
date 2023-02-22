@@ -26,7 +26,7 @@ class Up(
     val databaseFolder = "./database"
 
     val dbName = "jelasticozor-db-staging"
-    val clusterName = "jelasticozor-engine-staging"
+    val clusterName = "jelasticozor-engine-master"
 
     steps {
         // TODO: we publish sensitive data as environment variables (e.g. passwords, api keys); we should fix that
