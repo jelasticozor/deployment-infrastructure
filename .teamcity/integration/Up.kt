@@ -71,20 +71,21 @@ class Up(
             manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
             dockerToolsTag = dockerTag,
         )
-        exposeKubernetesApiServer(
-            envName = clusterName,
-            envPropsQueries = listOf(
-                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
-            ),
-            dockerToolsTag = dockerTag
-        )
-        installHelmCharts(
-            workingDir = ".",
-            dockerToolsTag = dockerTag,
-        )
-        hideKubernetesApiServer(
-            envName = clusterName,
-            dockerToolsTag = dockerTag,
-        )
+        // TODO: reactivate
+//        exposeKubernetesApiServer(
+//            envName = clusterName,
+//            envPropsQueries = listOf(
+//                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
+//            ),
+//            dockerToolsTag = dockerTag
+//        )
+//        installHelmCharts(
+//            workingDir = ".",
+//            dockerToolsTag = dockerTag,
+//        )
+//        hideKubernetesApiServer(
+//            envName = clusterName,
+//            dockerToolsTag = dockerTag,
+//        )
     }
 })
