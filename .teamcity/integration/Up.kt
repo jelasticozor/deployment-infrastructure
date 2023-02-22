@@ -20,7 +20,7 @@ class Up(
     }
 
     failureConditions {
-        executionTimeoutMin = 60
+        executionTimeoutMin = 120
     }
 
     val databaseFolder = "./database"

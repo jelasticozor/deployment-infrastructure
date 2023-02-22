@@ -6,7 +6,5 @@ onInstall:
   - cmd[${nodes.k8sm.master.id}]: |-
       wget ${baseUrl}/kubernetes/api-ingress.yaml -O api-ingress.yaml
       sed -i s/FQDN/${env.domain}/g api-ingress.yaml
-      while true; do 
-        kubectl apply -f api-ingress.yaml && break
-        sleep 5
-      done
+      kubectl apply -f api-ingress.yaml && break
+      sleep 5
