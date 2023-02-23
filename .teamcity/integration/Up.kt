@@ -26,6 +26,9 @@ class Up(
     val databaseFolder = "./database"
 
     val dbName = "jelasticozor-db-staging"
+    // TODO: this name will not work; we need to generate a new name each time we deploy
+    // because otherwise the new IPv4 will conflict with the old IPv4 registered on lets encrypt
+    // with the same FQDN
     val clusterName = "jelasticozor-engine-master"
 
     steps {
@@ -71,21 +74,20 @@ class Up(
             manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
             dockerToolsTag = dockerTag,
         )
-        // TODO: reactivate
-//        exposeKubernetesApiServer(
-//            envName = clusterName,
-//            envPropsQueries = listOf(
-//                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
-//            ),
-//            dockerToolsTag = dockerTag
-//        )
-//        installHelmCharts(
-//            workingDir = ".",
-//            dockerToolsTag = dockerTag,
-//        )
-//        hideKubernetesApiServer(
-//            envName = clusterName,
-//            dockerToolsTag = dockerTag,
-//        )
+        exposeKubernetesApiServer(
+            envName = clusterName,
+            envPropsQueries = listOf(
+                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
+            ),
+            dockerToolsTag = dockerTag
+        )
+        installHelmCharts(
+            workingDir = ".",
+            dockerToolsTag = dockerTag,
+        )
+        hideKubernetesApiServer(
+            envName = clusterName,
+            dockerToolsTag = dockerTag,
+        )
     }
 })
