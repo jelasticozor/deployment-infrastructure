@@ -25,11 +25,12 @@ class Up(
 
     val databaseFolder = "./database"
 
+    // TODO: the environment names should be pushed to a state file
     val dbName = "jelasticozor-db-staging"
     // TODO: this name will not work; we need to generate a new name each time we deploy
     // because otherwise the new IPv4 will conflict with the old IPv4 registered on lets encrypt
     // with the same FQDN
-    val clusterName = "jelasticozor-engine-master"
+    val clusterName = "jelasticozor-engine-staging"
 
     steps {
         // TODO: we publish sensitive data as environment variables (e.g. passwords, api keys); we should fix that
@@ -94,6 +95,10 @@ class Up(
                     fi
                     sleep 1
                 done
+                
+                if [ "${'$'}i" = "120" ] ; then
+                  exit 1
+                fi
             """.trimIndent()
         }
         installHelmCharts(

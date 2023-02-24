@@ -22,6 +22,7 @@ class Down(
         executionTimeoutMin = 30
     }
 
+    // TODO: the environment names should be obtained from a state file
     steps {
         deleteEnvironment(
             envName = "jelasticozor-engine-staging",
