@@ -81,6 +81,21 @@ class Up(
             ),
             dockerToolsTag = dockerTag
         )
+        script {
+            name = "Wait For Kubernetes API"
+            scriptContent = """
+                #! /bin/sh
+                
+                for i in ${'$'}(seq 1 120) ; do
+                    status_code=${'$'}(curl -s -o /dev/null -w "%{http_code}" ${'$'}KUBERNETES_API_URL/version)
+                    echo "status code: ${'$'}status_code"
+                    if [ "${'$'}status_code" = "200" ] ; then
+                        break
+                    fi
+                    sleep 1
+                done
+            """.trimIndent()
+        }
         installHelmCharts(
             workingDir = ".",
             dockerToolsTag = dockerTag,
