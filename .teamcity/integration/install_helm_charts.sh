@@ -2,7 +2,7 @@
 
 set -e
 
-./cert-manager/install.sh
+# cert manager has already been installed through the k8s manifest
 ./mailhog/install.sh
 ./faas/install.sh
 ./iam/install.sh
