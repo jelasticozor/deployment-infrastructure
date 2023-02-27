@@ -1,4 +1,4 @@
-package integration
+package foundations
 
 import common.scripts.readScript
 import jetbrains.buildServer.configs.kotlin.BuildSteps
@@ -10,7 +10,7 @@ fun BuildSteps.installHelmCharts(workingDir: String, dockerToolsTag: String): Sc
         name = "Install Helm Charts"
         scriptContent = readScript(listOf(
             "common/jelastic/connect_cluster.sh",
-            "integration/install_helm_charts.sh",
+            "foundations/install_helm_charts.sh",
         ))
         this.workingDir = workingDir
         dockerImage = "%system.docker-registry.group%/docker-tools/devspace:$dockerToolsTag"

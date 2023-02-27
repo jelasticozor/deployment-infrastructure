@@ -1,6 +1,4 @@
 import common.templates.NexusDockerLogin
-import integration.Up
-import integration.Down
 import jetbrains.buildServer.configs.kotlin.*
 
 /*
@@ -35,13 +33,45 @@ project {
     template(NexusDockerLogin)
 
     val dockerTag = "b2e6ec6b"
+    val databaseFolder = "./database"
+    val databaseName = "jelasticozor-db-staging"
+    val clusterName = "jelasticozor-engine-staging"
 
-    val upBuild = Up(
-        dockerTag = dockerTag,
-    )
-    buildType(upBuild)
-    val downBuild = Down(
-        dockerTag = dockerTag
-    )
-    buildType(downBuild)
+    subProject {
+        name = "Jelastic Environments"
+        id("JelasticEnvironments")
+
+        val upBuild = infrastructure.Up(
+            dockerTag = dockerTag,
+            databaseFolder = databaseFolder,
+            databaseName = databaseName,
+            clusterName = clusterName,
+        )
+        buildType(upBuild)
+        val downBuild = infrastructure.Down(
+            dockerTag = dockerTag,
+            databaseName = databaseName,
+            clusterName = clusterName,
+        )
+        buildType(downBuild)
+    }
+
+    subProject {
+        name = "Foundations"
+        id("Foundations")
+
+        val upBuild = foundations.Up(
+            dockerTag = dockerTag,
+            databaseFolder = databaseFolder,
+            databaseName = databaseName,
+            clusterName = clusterName,
+        )
+        buildType(upBuild)
+        val downBuild = foundations.Down(
+            dockerTag = dockerTag,
+            databaseName = databaseName,
+            clusterName = clusterName,
+        )
+        buildType(downBuild)
+    }
 }

@@ -1,4 +1,4 @@
-package integration
+package foundations
 
 import jetbrains.buildServer.configs.kotlin.BuildSteps
 import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep

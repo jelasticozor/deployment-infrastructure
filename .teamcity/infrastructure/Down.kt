@@ -1,4 +1,4 @@
-package integration
+package infrastructure
 
 import common.jelastic.deleteEnvironment
 import common.templates.NexusDockerLogin
@@ -7,6 +7,8 @@ import jetbrains.buildServer.configs.kotlin.DslContext
 
 class Down(
     dockerTag: String,
+    databaseName: String,
+    clusterName: String,
 ) : BuildType({
     templates(
         NexusDockerLogin
@@ -21,9 +23,6 @@ class Down(
     failureConditions {
         executionTimeoutMin = 30
     }
-
-    val databaseName = "jelasticozor-db-staging"
-    val clusterName = "jelasticozor-engine-staging"
 
     steps {
         deleteEnvironment(
