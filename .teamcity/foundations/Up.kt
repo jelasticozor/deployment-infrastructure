@@ -46,6 +46,7 @@ class Up(
                 echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
             """.trimIndent()
         }
+        // TODO: this step needs to gather information from the vault
         createFusionAuthDatabase(workingDir = databaseFolder)
         getEnvironmentProperties(
             envName = clusterName,
@@ -54,6 +55,7 @@ class Up(
             ),
             dockerToolsTag = dockerTag,
         )
+        // TODO: this step needs to gather information from the vault
         exposeKubernetesApiServer(
             envName = clusterName,
             envPropsQueries = listOf(
@@ -61,10 +63,12 @@ class Up(
             ),
             dockerToolsTag = dockerTag
         )
+        // TODO: this step needs to gather information from the vault
         installHelmCharts(
             workingDir = ".",
             dockerToolsTag = dockerTag,
         )
+        // TODO: this step needs to gather information from the vault
         hideKubernetesApiServer(
             envName = clusterName,
             dockerToolsTag = dockerTag,
