@@ -48,7 +48,7 @@ class Up(
         }
         createFusionAuthDatabase(workingDir = databaseFolder)
         getEnvironmentProperties(
-            envName = databaseName,
+            envName = clusterName,
             envPropsQueries = listOf(
                 Pair("FQDN", "${'$'}{env.domain}"),
             ),
