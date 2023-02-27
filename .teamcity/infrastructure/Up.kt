@@ -16,6 +16,7 @@ class Up(
     )
 
     name = "Up"
+    id("InfraUp")
 
     vcs {
         root(DslContext.settingsRoot)

@@ -19,6 +19,7 @@ class Up(
     )
 
     name = "Up"
+    id("FoundationsUp")
 
     vcs {
         root(DslContext.settingsRoot)

@@ -14,6 +14,7 @@ class Down(
     )
 
     name = "Down"
+    id("FoundationsDown")
 
     vcs {
         root(DslContext.settingsRoot)

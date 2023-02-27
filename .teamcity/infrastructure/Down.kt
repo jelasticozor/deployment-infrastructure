@@ -15,6 +15,7 @@ class Down(
     )
 
     name = "Down"
+    id("InfraDown")
 
     vcs {
         root(DslContext.settingsRoot)
