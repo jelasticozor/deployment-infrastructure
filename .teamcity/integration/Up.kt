@@ -49,71 +49,71 @@ class Up(
             stateFile = stateFile,
             workingDir = "./"
         )
-        script {
-            name = "Publish Database Hostname"
-            scriptContent = """
-                #! /bin/sh
-                
-                echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
-            """.trimIndent()
-        }
-        createFusionAuthDatabase(workingDir = databaseFolder)
-        createEnvironment(
-            manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
-            envPropsQueries = listOf(
-                Pair("KUBERNETES_ENV_NAME", "${'$'}{env.envName}"),
-                Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"),
-                Pair("FQDN", "${'$'}{env.domain}"),
-            ),
-            jsonSettingsFile = "settings.json",
-            dockerToolsTag = dockerTag,
-            workingDir = "./kubernetes",
-            region = "new",
-        )
-        updateState(
-            envVar = "KUBERNETES_ENV_NAME",
-            stateFile = stateFile,
-            workingDir = "./"
-        )
-        createEnvironment(
-            envName = "%env.KUBERNETES_ENV_NAME%",
-            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
-            dockerToolsTag = dockerTag,
-        )
-        exposeKubernetesApiServer(
-            envName = "%env.KUBERNETES_ENV_NAME%",
-            envPropsQueries = listOf(
-                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
-            ),
-            dockerToolsTag = dockerTag
-        )
-        script {
-            name = "Wait For Kubernetes API"
-            scriptContent = """
-                #! /bin/sh
-                
-                for i in ${'$'}(seq 1 120) ; do
-                    status_code=${'$'}(curl -s -o /dev/null -w "%{http_code}" ${'$'}KUBERNETES_API_URL/version)
-                    echo "status code: ${'$'}status_code"
-                    if [ "${'$'}status_code" = "200" ] ; then
-                        break
-                    fi
-                    sleep 1
-                done
-                
-                if [ "${'$'}i" = "120" ] ; then
-                  exit 1
-                fi
-            """.trimIndent()
-        }
-        installHelmCharts(
-            workingDir = ".",
-            dockerToolsTag = dockerTag,
-        )
-        hideKubernetesApiServer(
-            envName = "%env.KUBERNETES_ENV_NAME%",
-            dockerToolsTag = dockerTag,
-        )
+//        script {
+//            name = "Publish Database Hostname"
+//            scriptContent = """
+//                #! /bin/sh
+//
+//                echo "##teamcity[setParameter name='env.DATABASE_HOSTNAME' value='${'$'}{DATABASE_URL#https://}']"
+//            """.trimIndent()
+//        }
+//        createFusionAuthDatabase(workingDir = databaseFolder)
+//        createEnvironment(
+//            manifestUrl = "https://raw.githubusercontent.com/jelastic-jps/kubernetes/v1.25.4/manifest.jps",
+//            envPropsQueries = listOf(
+//                Pair("KUBERNETES_ENV_NAME", "${'$'}{env.envName}"),
+//                Pair("KUBERNETES_API_TOKEN", "${'$'}{globals.token}"),
+//                Pair("FQDN", "${'$'}{env.domain}"),
+//            ),
+//            jsonSettingsFile = "settings.json",
+//            dockerToolsTag = dockerTag,
+//            workingDir = "./kubernetes",
+//            region = "new",
+//        )
+//        updateState(
+//            envVar = "KUBERNETES_ENV_NAME",
+//            stateFile = stateFile,
+//            workingDir = "./"
+//        )
+//        createEnvironment(
+//            envName = "%env.KUBERNETES_ENV_NAME%",
+//            manifestUrl = "https://raw.githubusercontent.com/jelasticozor/deployment-infrastructure/main/ssl.yaml",
+//            dockerToolsTag = dockerTag,
+//        )
+//        exposeKubernetesApiServer(
+//            envName = "%env.KUBERNETES_ENV_NAME%",
+//            envPropsQueries = listOf(
+//                Pair("KUBERNETES_API_URL", "https://${'$'}{env.domain}/api"),
+//            ),
+//            dockerToolsTag = dockerTag
+//        )
+//        script {
+//            name = "Wait For Kubernetes API"
+//            scriptContent = """
+//                #! /bin/sh
+//
+//                for i in ${'$'}(seq 1 120) ; do
+//                    status_code=${'$'}(curl -s -o /dev/null -w "%{http_code}" ${'$'}KUBERNETES_API_URL/version)
+//                    echo "status code: ${'$'}status_code"
+//                    if [ "${'$'}status_code" = "200" ] ; then
+//                        break
+//                    fi
+//                    sleep 1
+//                done
+//
+//                if [ "${'$'}i" = "120" ] ; then
+//                  exit 1
+//                fi
+//            """.trimIndent()
+//        }
+//        installHelmCharts(
+//            workingDir = ".",
+//            dockerToolsTag = dockerTag,
+//        )
+//        hideKubernetesApiServer(
+//            envName = "%env.KUBERNETES_ENV_NAME%",
+//            dockerToolsTag = dockerTag,
+//        )
     }
 
     artifactRules = """
