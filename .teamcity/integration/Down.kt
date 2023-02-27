@@ -1,7 +1,7 @@
 package integration
 
-import common.templates.NexusDockerLogin
 import common.jelastic.deleteEnvironment
+import common.templates.NexusDockerLogin
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.DslContext
 
@@ -22,14 +22,16 @@ class Down(
         executionTimeoutMin = 30
     }
 
-    // TODO: the environment names should be obtained from a state file
+    val databaseName = "jelasticozor-db-staging"
+    val clusterName = "jelasticozor-engine-staging"
+
     steps {
         deleteEnvironment(
-            envName = "jelasticozor-engine-staging",
+            envName = clusterName,
             dockerToolsTag = dockerTag,
         )
         deleteEnvironment(
-            envName = "jelasticozor-db-staging",
+            envName = databaseName,
             dockerToolsTag = dockerTag,
         )
     }
